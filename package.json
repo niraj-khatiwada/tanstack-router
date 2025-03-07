@@ -1,0 +1,92 @@
+{
+  "name": "ai-job-search",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port=9000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite",
+    "pnpm:devPreinstall": "fnm use",
+    "postinstall": "husky install",
+    "lint-staged": "lint-staged"
+  },
+  "dependencies": {
+    "@heroui/button": "2.2.10",
+    "@heroui/checkbox": "2.3.9",
+    "@heroui/code": "2.2.7",
+    "@heroui/divider": "2.2.6",
+    "@heroui/dropdown": "2.3.10",
+    "@heroui/image": "2.2.6",
+    "@heroui/link": "2.2.8",
+    "@heroui/modal": "2.2.8",
+    "@heroui/navbar": "^2.2.13",
+    "@heroui/progress": "2.2.7",
+    "@heroui/react": "2.6.14",
+    "@heroui/select": "2.4.10",
+    "@heroui/slider": "2.4.8",
+    "@heroui/spinner": "2.2.7",
+    "@heroui/tabs": "2.2.8",
+    "@heroui/theme": "2.4.6",
+    "@heroui/tooltip": "2.2.8",
+    "@heroui/use-theme": "^2.1.2",
+    "@tanstack/react-router": "^1.97.21",
+    "@tanstack/router-devtools": "^1.97.21",
+    "clsx": "^2.0.0",
+    "framer-motion": "11.18.2",
+    "lodash": "^4.17.21",
+    "pretty-bytes": "^6.1.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "sonner": "^1.4.41",
+    "tailwind-merge": "^1.14.0",
+    "vaul": "^0.9.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@tanstack/router-plugin": "^1.97.22",
+    "@types/lodash": "^4.17.4",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "autoprefixer": "^10.4.16",
+    "eslint": "8.9.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.2.3",
+    "postcss": "^8.4.31",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5",
+    "vite": "^6.0.3",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-svgr": "^4.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
