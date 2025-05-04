@@ -1,19 +1,21 @@
 import {
   Button as NextButton,
   type ButtonProps as NextButtonProps,
-} from '@heroui/button'
+} from '@heroui/react'
+import { ClassValue } from 'clsx'
 import React from 'react'
 
 import { cn } from '~/utils/tailwind'
 
-export interface ButtonProps extends NextButtonProps {
+export interface ButtonProps extends Omit<NextButtonProps, 'className'> {
   color?: NextButtonProps['color']
   variant?: NextButtonProps['variant']
+  className?: ClassValue
 }
 
 const Button = React.forwardRef(
   (props: ButtonProps, ref: NextButtonProps['ref']) => {
-    const { color, variant, ...nextButtonProps } = props
+    const { color, variant, className, ...nextButtonProps } = props
 
     return (
       <NextButton
@@ -22,7 +24,7 @@ const Button = React.forwardRef(
         color={color ?? 'default'}
         variant={variant ?? 'flat'}
         {...nextButtonProps}
-        className={cn(['font-medium', nextButtonProps.className])}
+        className={cn(['font-medium', className])}
       />
     )
   },

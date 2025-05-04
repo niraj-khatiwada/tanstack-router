@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Check from '~/assets/icons/check.svg?react'
 import Cross from '~/assets/icons/cross.svg?react'
 import CurvedArrow from '~/assets/icons/curved-arrow.svg?react'
 import DragAndDrop from '~/assets/icons/drag-and-drop.svg?react'
@@ -52,6 +53,7 @@ const registry = asRegistry({
   warning: Warning,
   error: Error,
   redo: Redo,
+  check: Check,
 })
 
 export default registry

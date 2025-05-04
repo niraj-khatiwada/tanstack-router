@@ -36,7 +36,6 @@
 }
 
 *:focus {
-  outline-color: theme('colors.primary') !important;
   font-family: var(--font-poppins);
 }
 

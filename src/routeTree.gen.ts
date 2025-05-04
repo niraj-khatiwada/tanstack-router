@@ -10,10 +10,38 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
 import { Route as rootIndexImport } from './routes/(root)/index'
+import { Route as rootRoute } from './routes/__root'
+import { Route as ChatIndexImport } from './routes/chat/index'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as SigninIndexImport } from './routes/signin/index'
+import { Route as SignupIndexImport } from './routes/signup/index'
 
 // Create/Update Routes
+
+const SignupIndexRoute = SignupIndexImport.update({
+  id: '/signup/',
+  path: '/signup/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SigninIndexRoute = SigninIndexImport.update({
+  id: '/signin/',
+  path: '/signin/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardIndexRoute = DashboardIndexImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ChatIndexRoute = ChatIndexImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const rootIndexRoute = rootIndexImport.update({
   id: '/(root)/',
@@ -32,6 +60,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof rootIndexImport
       parentRoute: typeof rootRoute
     }
+    '/chat/': {
+      id: '/chat/'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/signin/': {
+      id: '/signin/'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup/': {
+      id: '/signup/'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +95,58 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof rootIndexRoute
+  '/chat': typeof ChatIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/signin': typeof SigninIndexRoute
+  '/signup': typeof SignupIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof rootIndexRoute
+  '/chat': typeof ChatIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/signin': typeof SigninIndexRoute
+  '/signup': typeof SignupIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/(root)/': typeof rootIndexRoute
+  '/chat/': typeof ChatIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/signin/': typeof SigninIndexRoute
+  '/signup/': typeof SignupIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/chat' | '/dashboard' | '/signin' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/(root)/'
+  to: '/' | '/chat' | '/dashboard' | '/signin' | '/signup'
+  id:
+    | '__root__'
+    | '/(root)/'
+    | '/chat/'
+    | '/dashboard/'
+    | '/signin/'
+    | '/signup/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   rootIndexRoute: typeof rootIndexRoute
+  ChatIndexRoute: typeof ChatIndexRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  SigninIndexRoute: typeof SigninIndexRoute
+  SignupIndexRoute: typeof SignupIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   rootIndexRoute: rootIndexRoute,
+  ChatIndexRoute: ChatIndexRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+  SigninIndexRoute: SigninIndexRoute,
+  SignupIndexRoute: SignupIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +159,27 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/(root)/"
+        "/(root)/",
+        "/chat/",
+        "/dashboard/",
+        "/signin/",
+        "/signup/"
       ]
     },
     "/(root)/": {
       "filePath": "(root)/index.tsx"
+    },
+    "/chat/": {
+      "filePath": "chat/index.tsx"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.tsx"
+    },
+    "/signin/": {
+      "filePath": "signin/index.tsx"
+    },
+    "/signup/": {
+      "filePath": "signup/index.tsx"
     }
   }
 }

@@ -1,8 +1,8 @@
-import React from 'react'
 import {
   Code as NextUICode,
   type CodeProps as NextUICodeProps,
-} from '@heroui/code'
+} from '@heroui/react'
+import React from 'react'
 
 interface CodeProps extends NextUICodeProps {}
 

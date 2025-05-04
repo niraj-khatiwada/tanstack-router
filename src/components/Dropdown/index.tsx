@@ -7,21 +7,15 @@ import {
   type DropdownMenuProps as NextUIDropdownMenuProps,
   type DropdownProps as NextUIDropdownProps,
   type DropdownTriggerProps as NextUIDropdownTriggerProps,
-} from '@heroui/dropdown'
+} from '@heroui/react'
 import React from 'react'
 import { blurCSS } from '~/ui/BackdropBlur'
-import { getPlatform } from '~/utils/fs'
 import { cn } from '~/utils/tailwind'
-
-const { isWindows, isMacOS } = getPlatform()
 
 interface DropdownProps extends NextUIDropdownProps {}
 function Dropdown(props: DropdownProps) {
   return (
-    <NextUIDropdown
-      {...props}
-      className={cn([isMacOS || isWindows ? blurCSS : '', props?.className])}
-    />
+    <NextUIDropdown {...props} className={cn([blurCSS, props?.className])} />
   )
 }
 

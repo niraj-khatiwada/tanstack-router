@@ -1,8 +1,7 @@
-import { ButtonProps } from '@heroui/button'
-import { UseDisclosureProps } from '@heroui/modal'
+import { UseDisclosureProps } from '@heroui/react'
 import React from 'react'
 
-import Button from '~/components/Button'
+import Button, { ButtonProps } from '~/components/Button'
 import Divider from '~/components/Divider'
 import Icon from '~/components/Icon'
 import Modal, {
@@ -10,11 +9,12 @@ import Modal, {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalProps,
 } from '~/components/Modal'
 
 type renderFooterArgs = { closeModal: UseDisclosureProps['onClose'] }
 
-type AlertTypes = 'warning' | 'error'
+type AlertTypes = 'success' | 'warning' | 'error' | 'info'
 
 type AlertDialogProps = {
   alertType?: AlertTypes
@@ -23,11 +23,14 @@ type AlertDialogProps = {
   discloser: UseDisclosureProps
   renderFooter?: (_: renderFooterArgs) => React.ReactNode
   renderIcon?: () => React.ReactNode
+  modalProps?: Partial<ModalProps>
 }
 
 const iconMapping: Record<AlertTypes, React.JSX.Element> = {
+  success: <Icon name="check" size={70} className="text-green-500 mb-2" />,
   warning: <Icon name="warning" size={70} className="text-yellow-500 mb-2" />,
   error: <Icon name="error" size={70} className="text-red-500 mb-2" />,
+  info: <Icon name="info" size={70} className="text-primary mb-2" />,
 }
 
 function AlertDialog({
@@ -37,9 +40,14 @@ function AlertDialog({
   description,
   renderFooter,
   renderIcon,
+  modalProps,
 }: AlertDialogProps) {
   return (
-    <Modal isOpen={discloser?.isOpen} onClose={discloser?.onClose}>
+    <Modal
+      isOpen={discloser?.isOpen}
+      onClose={discloser?.onClose}
+      {...modalProps}
+    >
       <ModalContent className="max-w-[20rem] pb-2 overflow-hidden rounded-2xl">
         <>
           <ModalHeader className="flex flex-col justify-center items-center pt-1 pb-1 mt-4">

@@ -13,7 +13,12 @@ export default defineConfig(({ mode }) => ({
     }),
     react(),
     svgr(),
-    eslint(),
+    eslint({
+      failOnError: false,
+      failOnWarning: false,
+      emitWarning: false,
+      emitError: true,
+    }),
   ],
   resolve: {
     alias: {
