@@ -8,6 +8,7 @@ import Error from '~/assets/icons/error.svg?react'
 import FileExplorer from '~/assets/icons/file-explorer.svg?react'
 import Github from '~/assets/icons/github.svg?react'
 import Info from '~/assets/icons/info.svg?react'
+import Link from '~/assets/icons/link.svg?react'
 import Logo from '~/assets/icons/logo.svg?react'
 import LowResHeart from '~/assets/icons/low-res-heart.svg?react'
 import Moon from '~/assets/icons/moon.svg?react'
@@ -54,6 +55,7 @@ const registry = asRegistry({
   error: Error,
   redo: Redo,
   check: Check,
+  link: Link,
 })
 
 export default registry

@@ -1,12 +1,14 @@
 import { useDisclosure } from '@heroui/react'
 import { useForm } from '@tanstack/react-form'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import Button from '~/components/Button'
 import TextInput from '~/components/Input/TextInput'
 import Link from '~/components/Link'
 import { auth } from '~/libs/auth'
+import GithubOAuth from '~/ui/auth/github-oauth'
 import AlertDialog from '~/ui/dialogs/AlertDialog'
 import { preventRoute } from '~/utils/route'
 
@@ -32,6 +34,8 @@ type SignUpSchema = z.infer<typeof signupSchema>
 
 function SignUp() {
   const navigate = useNavigate()
+
+  const [isEmailAuth, setIsEmailAuth] = useState(false)
 
   const alertDialogDiscloser = useDisclosure()
 
@@ -60,74 +64,101 @@ function SignUp() {
   })
   return (
     <div className="mt-[20%]">
-      <form
-        className="space-y-4 max-w-[25rem] m-auto"
-        onSubmit={(evt) => {
-          evt.preventDefault()
-          form.handleSubmit()
-        }}
-      >
-        <h1 className="text-xl font-bold text-center">Sign Up</h1>
-        <form.Field name="email">
-          {({ state, handleChange }) => (
-            <TextInput
-              value={state.value}
-              placeholder="Email"
-              isInvalid={state.meta.errors.length > 0}
-              errorMessage={state.meta.errors.map((e) => (
-                <p>{e?.message}</p>
-              ))}
-              onChange={(e) => handleChange(e.target.value)}
+      <div className="max-w-[25rem] m-auto">
+        {isEmailAuth ? (
+          <form
+            className="space-y-4"
+            onSubmit={(evt) => {
+              evt.preventDefault()
+              form.handleSubmit()
+            }}
+          >
+            <h1 className="text-xl font-bold text-center">Sign Up</h1>
+            <form.Field name="email">
+              {({ state, handleChange }) => (
+                <TextInput
+                  value={state.value}
+                  placeholder="Email"
+                  isInvalid={state.meta.errors.length > 0}
+                  errorMessage={state.meta.errors.map((e) => (
+                    <p>{e?.message}</p>
+                  ))}
+                  onChange={(e) => handleChange(e.target.value)}
+                />
+              )}
+            </form.Field>
+            <form.Field name="username">
+              {({ state, handleChange }) => (
+                <TextInput
+                  value={state.value}
+                  placeholder="Username"
+                  isInvalid={state.meta.errors.length > 0}
+                  errorMessage={state.meta.errors.map((e) => (
+                    <p>{e?.message}</p>
+                  ))}
+                  onChange={(e) => handleChange(e.target.value)}
+                />
+              )}
+            </form.Field>
+            <form.Field name="password">
+              {({ state, handleChange }) => (
+                <TextInput
+                  value={state.value}
+                  type="password"
+                  placeholder="Password"
+                  isInvalid={state.meta.errors.length > 0}
+                  errorMessage={state.meta.errors.map((e) => (
+                    <p>{e?.message}</p>
+                  ))}
+                  onChange={(e) => handleChange(e.target.value)}
+                />
+              )}
+            </form.Field>
+            <form.Subscribe
+              selector={(state) => [state.canSubmit, state.isSubmitting]}
+              children={([canSubmit, isSubmitting]) => (
+                <Button
+                  type="submit"
+                  className="w-full bg-primary text-white py-2 rounded-xl"
+                  isDisabled={!canSubmit}
+                  isLoading={isSubmitting}
+                >
+                  Sign Up
+                </Button>
+              )}
             />
-          )}
-        </form.Field>
-        <form.Field name="username">
-          {({ state, handleChange }) => (
-            <TextInput
-              value={state.value}
-              placeholder="Username"
-              isInvalid={state.meta.errors.length > 0}
-              errorMessage={state.meta.errors.map((e) => (
-                <p>{e?.message}</p>
-              ))}
-              onChange={(e) => handleChange(e.target.value)}
-            />
-          )}
-        </form.Field>
-        <form.Field name="password">
-          {({ state, handleChange }) => (
-            <TextInput
-              value={state.value}
-              type="password"
-              placeholder="Password"
-              isInvalid={state.meta.errors.length > 0}
-              errorMessage={state.meta.errors.map((e) => (
-                <p>{e?.message}</p>
-              ))}
-              onChange={(e) => handleChange(e.target.value)}
-            />
-          )}
-        </form.Field>
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
             <Button
-              type="submit"
-              className="w-full bg-primary text-white py-2 rounded-xl"
-              isDisabled={!canSubmit}
-              isLoading={isSubmitting}
+              variant="light"
+              className="text-sm mx-auto w-fit text-center block text-black dark:text-white"
+              onPress={() => {
+                setIsEmailAuth(false)
+              }}
             >
-              Sign Up
+              {'< Back to SignUp'}
             </Button>
-          )}
-        />
-        <Link
-          href="/signin"
-          className="text-sm mx-auto w-fit text-center block"
-        >
-          Sign In
-        </Link>
-      </form>
+          </form>
+        ) : (
+          <div className="space-y-2">
+            <Button
+              variant="solid"
+              color="primary"
+              className="w-full"
+              onPress={() => {
+                setIsEmailAuth(true)
+              }}
+            >
+              SignUp with Email
+            </Button>
+            <GithubOAuth />
+            <Link
+              href="/signin"
+              className="text-sm mx-auto w-fit text-center block"
+            >
+              Sign In?
+            </Link>
+          </div>
+        )}
+      </div>
       <AlertDialog
         alertType="success"
         title="Verify your email"

@@ -15,10 +15,10 @@ function GithubOAuth() {
     <Button
       type="button"
       className="w-full"
-      endContent={<Icon name="github" size={18} />}
+      endContent={<Icon name="github" size={18} className="m-0 p-0" />}
       onPress={handleSignin}
     >
-      Sign in with GitHub
+      Continue with GitHub
     </Button>
   )
 }
