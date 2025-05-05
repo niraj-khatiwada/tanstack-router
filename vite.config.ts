@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => ({
       failOnWarning: false,
       emitWarning: false,
       emitError: true,
+      exclude: ['src/api/gen'],
     }),
   ],
   resolve: {

@@ -1,5 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { auth } from '~/libs/auth'
+import { userControllerFindAllUsersOptions } from '~/api/gen/@tanstack/react-query.gen'
 import { protectRoute } from '~/utils/route'
 
 export const Route = createFileRoute('/dashboard/')({
@@ -8,6 +9,16 @@ export const Route = createFileRoute('/dashboard/')({
 })
 
 function Dashboard() {
-  const { data } = auth.useSession()
-  return <pre>{JSON.stringify(data, null, 2)}</pre>
+  const { data } = useQuery(
+    userControllerFindAllUsersOptions({
+      query: { page: 1, limit: 10 },
+    }),
+  )
+
+  return (
+    <>
+      <h1 className="text-2xl">Users:</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </>
+  )
 }
