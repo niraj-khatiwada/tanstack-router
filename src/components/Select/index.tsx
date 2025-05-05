@@ -5,7 +5,7 @@ import {
   type SelectProps as NextUISelectProps,
 } from '@heroui/react'
 import React from 'react'
-import { blurCSS } from '~/ui/BackdropBlur'
+import { blurCSS } from '~/ui/backdrop-blur'
 import { cn } from '~/utils/tailwind'
 
 interface SelectProps extends NextUISelectProps {}

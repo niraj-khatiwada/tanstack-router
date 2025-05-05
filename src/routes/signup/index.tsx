@@ -7,7 +7,7 @@ import Button from '~/components/Button'
 import TextInput from '~/components/Input/TextInput'
 import Link from '~/components/Link'
 import { auth } from '~/libs/auth'
-import AlertDialog from '~/ui/Dialogs/AlertDialog'
+import AlertDialog from '~/ui/dialogs/AlertDialog'
 import { preventRoute } from '~/utils/route'
 
 export const Route = createFileRoute('/signup/')({

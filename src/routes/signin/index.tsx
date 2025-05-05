@@ -6,6 +6,7 @@ import Button from '~/components/Button'
 import TextInput from '~/components/Input/TextInput'
 import Link from '~/components/Link'
 import { auth } from '~/libs/auth'
+import GithubOAuth from '~/ui/auth/github-oauth'
 import { preventRoute } from '~/utils/route'
 
 export const Route = createFileRoute('/signin/')({
@@ -98,6 +99,7 @@ function SignIn() {
             </Button>
           )}
         />
+        <GithubOAuth />
         <Link
           href="/signup"
           className="text-sm mx-auto w-fit text-center block"

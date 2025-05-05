@@ -8,7 +8,7 @@ import {
 } from '@heroui/react'
 import { useNavigate } from '@tanstack/react-router'
 import { auth } from '~/libs/auth'
-import ThemeSwitcher from '~/ui/ThemeSwitcher'
+import ThemeSwitcher from '~/ui/theme-switcher'
 import Avatar from '../Avatar'
 import Button from '../Button'
 import Dropdown, { DropdownTrigger } from '../Dropdown'
@@ -39,8 +39,14 @@ function Navbar() {
                 <Button className="min-w-0 p-0 bg-none!">
                   <Avatar
                     size="sm"
-                    imgProps={{ src: data?.user?.image as string }}
-                    name={data?.user?.name?.slice(0, 1)?.toUpperCase?.() ?? ''}
+                    src={data?.user?.image as string}
+                    {...(!data?.user?.image
+                      ? {
+                          name:
+                            data?.user?.name?.slice(0, 1)?.toUpperCase?.() ??
+                            '',
+                        }
+                      : {})}
                   />
                 </Button>
               </DropdownTrigger>
