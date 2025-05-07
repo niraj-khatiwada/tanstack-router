@@ -24,7 +24,7 @@ function Navbar() {
   }
 
   return (
-    <HeroNavbar>
+    <HeroNavbar maxWidth="xl">
       <NavbarBrand>
         <Link href="/" className="font-bold text-inherit">
           TanStack Start

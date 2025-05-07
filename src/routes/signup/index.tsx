@@ -10,11 +10,11 @@ import Link from '~/components/Link'
 import { auth } from '~/libs/auth'
 import GithubOAuth from '~/ui/auth/github-oauth'
 import AlertDialog from '~/ui/dialogs/AlertDialog'
-import { preventRoute } from '~/utils/route'
+import { preventRouteBeforeLoad } from '~/utils/router/before-load'
 
 export const Route = createFileRoute('/signup/')({
   component: SignUp,
-  beforeLoad: preventRoute,
+  beforeLoad: preventRouteBeforeLoad,
 })
 
 const signupSchema = z.object({

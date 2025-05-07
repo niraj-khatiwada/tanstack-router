@@ -3,11 +3,11 @@ import { FormEvent, useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import Button from '~/components/Button'
 import { env } from '~/utils/env'
-import { protectRoute } from '~/utils/route'
+import { protectRouteBeforeLoad } from '~/utils/router/before-load'
 
 export const Route = createFileRoute('/chat/')({
   component: Chat,
-  beforeLoad: protectRoute,
+  beforeLoad: protectRouteBeforeLoad,
 })
 
 const socket = io(env.VITE_API_URL, { withCredentials: true })

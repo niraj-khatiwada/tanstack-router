@@ -12,11 +12,11 @@ import Link from '~/components/Link'
 import { auth } from '~/libs/auth'
 import GithubOAuth from '~/ui/auth/github-oauth'
 import SignInMagicLink from '~/ui/auth/signin-magic-link'
-import { preventRoute } from '~/utils/route'
+import { preventRouteBeforeLoad } from '~/utils/router/before-load'
 
 export const Route = createFileRoute('/signin/')({
   component: SignIn,
-  beforeLoad: preventRoute,
+  beforeLoad: preventRouteBeforeLoad,
 })
 
 const signInSchema = z.object({
@@ -33,7 +33,7 @@ const locationHash = {
 
 function SignIn() {
   const navigate = useNavigate()
-  const { hash } = useLocation()
+  const { hash, search } = useLocation()
 
   const form = useForm({
     defaultValues: { emailOrUsername: '', password: '' } as SignInSchema,
@@ -60,7 +60,7 @@ function SignIn() {
           return
         }
         form.reset()
-        navigate({ to: '/dashboard' })
+        navigate({ to: search.redirectTo ?? '/dashboard' })
       } catch (error: any) {
         toast.error(error?.message ?? '')
       }
@@ -129,7 +129,7 @@ function SignIn() {
                 color="primary"
                 className="w-full"
                 onPress={() => {
-                  navigate({ to: '.', hash: locationHash.email })
+                  navigate({ to: '.', search, hash: locationHash.email })
                 }}
               >
                 SignIn with Email
@@ -141,7 +141,11 @@ function SignIn() {
             <SignInMagicLink
               isFormVisible={hash === locationHash.magicLink}
               onFormRequest={() => {
-                navigate({ to: '/signin', hash: locationHash.magicLink })
+                navigate({
+                  to: '/signin',
+                  search,
+                  hash: locationHash.magicLink,
+                })
               }}
             />
           ) : null}
@@ -157,7 +161,7 @@ function SignIn() {
               variant="light"
               className="text-sm mx-auto w-fit text-center block text-black dark:text-white mt-4"
               onPress={() => {
-                navigate({ to: '.' })
+                navigate({ to: '.', search })
               }}
             >
               {'< Back to SignIn'}

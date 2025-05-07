@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { userControllerFindAllUsersOptions } from '~/api/gen/@tanstack/react-query.gen'
-import { protectRoute } from '~/utils/route'
+import { protectRouteBeforeLoad } from '~/utils/router/before-load'
 
 export const Route = createFileRoute('/dashboard/')({
   component: Dashboard,
-  beforeLoad: protectRoute,
+  beforeLoad: protectRouteBeforeLoad,
 })
 
 function Dashboard() {
