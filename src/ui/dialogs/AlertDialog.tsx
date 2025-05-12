@@ -50,7 +50,7 @@ function AlertDialog({
     >
       <ModalContent className="max-w-[20rem] pb-2 overflow-hidden rounded-2xl">
         <>
-          <ModalHeader className="flex flex-col justify-center items-center pt-1 pb-1 mt-4">
+          <ModalHeader className="flex flex-col justify-center items-center pt-1 pb-1 mt-4 px-8">
             {renderIcon?.() ?? iconMapping?.[alertType] ?? null}
             {typeof title === 'string' ? (
               <p className="text-xl text-center">{title}</p>

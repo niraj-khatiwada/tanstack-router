@@ -72,54 +72,62 @@ function SignIn() {
       <div className="max-w-[25rem] m-auto">
         <h1 className="text-xl font-bold text-center mb-4">Sign In</h1>
         {hash === locationHash.email ? (
-          <form
-            onSubmit={(evt) => {
-              evt.preventDefault()
-              form.handleSubmit()
-            }}
-            className="space-y-4"
-          >
-            <form.Field name="emailOrUsername">
-              {({ state, handleChange }) => (
-                <TextInput
-                  value={state.value}
-                  placeholder="Email or Username"
-                  isInvalid={state.meta.errors.length > 0}
-                  errorMessage={state.meta.errors
-                    .map((e) => e?.message)
-                    .join(', ')}
-                  onChange={(e) => handleChange(e.target.value)}
-                />
-              )}
-            </form.Field>
-            <form.Field name="password">
-              {({ state, handleChange }) => (
-                <TextInput
-                  value={state.value}
-                  type="password"
-                  placeholder="Password"
-                  isInvalid={state.meta.errors.length > 0}
-                  errorMessage={state.meta.errors
-                    .map((e) => e?.message)
-                    .join(', ')}
-                  onChange={(e) => handleChange(e.target.value)}
-                />
-              )}
-            </form.Field>
-            <form.Subscribe
-              selector={(state) => [state.canSubmit, state.isSubmitting]}
-              children={([canSubmit, isSubmitting]) => (
-                <Button
-                  type="submit"
-                  className="w-full bg-primary text-white py-2 rounded-xl"
-                  isDisabled={!canSubmit}
-                  isLoading={isSubmitting}
-                >
-                  Sign In
-                </Button>
-              )}
-            />
-          </form>
+          <>
+            <form
+              onSubmit={(evt) => {
+                evt.preventDefault()
+                form.handleSubmit()
+              }}
+              className="space-y-4"
+            >
+              <form.Field name="emailOrUsername">
+                {({ state, handleChange }) => (
+                  <TextInput
+                    value={state.value}
+                    placeholder="Email or Username"
+                    isInvalid={state.meta.errors.length > 0}
+                    errorMessage={state.meta.errors
+                      .map((e) => e?.message)
+                      .join(', ')}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="password">
+                {({ state, handleChange }) => (
+                  <TextInput
+                    value={state.value}
+                    type="password"
+                    placeholder="Password"
+                    isInvalid={state.meta.errors.length > 0}
+                    errorMessage={state.meta.errors
+                      .map((e) => e?.message)
+                      .join(', ')}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
+                )}
+              </form.Field>
+              <form.Subscribe
+                selector={(state) => [state.canSubmit, state.isSubmitting]}
+                children={([canSubmit, isSubmitting]) => (
+                  <Button
+                    type="submit"
+                    className="w-full bg-primary text-white py-2 rounded-xl"
+                    isDisabled={!canSubmit}
+                    isLoading={isSubmitting}
+                  >
+                    Sign In
+                  </Button>
+                )}
+              />
+            </form>
+            <Link
+              to="/forgot-password"
+              className="w-full justify-end text-sm my-2"
+            >
+              Forgot Password?
+            </Link>
+          </>
         ) : null}
         <div className="space-y-2">
           {!hash ? (

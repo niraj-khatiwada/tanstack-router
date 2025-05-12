@@ -14,6 +14,8 @@ import { Route as rootIndexImport } from './routes/(root)/index'
 import { Route as rootRoute } from './routes/__root'
 import { Route as ChatIndexImport } from './routes/chat/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as ForgotPasswordIndexImport } from './routes/forgot-password/index'
+import { Route as ResetPasswordIndexImport } from './routes/reset-password/index'
 import { Route as SigninIndexImport } from './routes/signin/index'
 import { Route as SignupIndexImport } from './routes/signup/index'
 
@@ -28,6 +30,18 @@ const SignupIndexRoute = SignupIndexImport.update({
 const SigninIndexRoute = SigninIndexImport.update({
   id: '/signin/',
   path: '/signin/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ResetPasswordIndexRoute = ResetPasswordIndexImport.update({
+  id: '/reset-password/',
+  path: '/reset-password/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ForgotPasswordIndexRoute = ForgotPasswordIndexImport.update({
+  id: '/forgot-password/',
+  path: '/forgot-password/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,6 +88,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof rootRoute
     }
+    '/forgot-password/': {
+      id: '/forgot-password/'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/reset-password/': {
+      id: '/reset-password/'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/signin/': {
       id: '/signin/'
       path: '/signin'
@@ -97,6 +125,8 @@ export interface FileRoutesByFullPath {
   '/': typeof rootIndexRoute
   '/chat': typeof ChatIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/reset-password': typeof ResetPasswordIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
 }
@@ -105,6 +135,8 @@ export interface FileRoutesByTo {
   '/': typeof rootIndexRoute
   '/chat': typeof ChatIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/reset-password': typeof ResetPasswordIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
 }
@@ -114,20 +146,38 @@ export interface FileRoutesById {
   '/(root)/': typeof rootIndexRoute
   '/chat/': typeof ChatIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/forgot-password/': typeof ForgotPasswordIndexRoute
+  '/reset-password/': typeof ResetPasswordIndexRoute
   '/signin/': typeof SigninIndexRoute
   '/signup/': typeof SignupIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/dashboard' | '/signin' | '/signup'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/dashboard' | '/signin' | '/signup'
+  to:
+    | '/'
+    | '/chat'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
   id:
     | '__root__'
     | '/(root)/'
     | '/chat/'
     | '/dashboard/'
+    | '/forgot-password/'
+    | '/reset-password/'
     | '/signin/'
     | '/signup/'
   fileRoutesById: FileRoutesById
@@ -137,6 +187,8 @@ export interface RootRouteChildren {
   rootIndexRoute: typeof rootIndexRoute
   ChatIndexRoute: typeof ChatIndexRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  ForgotPasswordIndexRoute: typeof ForgotPasswordIndexRoute
+  ResetPasswordIndexRoute: typeof ResetPasswordIndexRoute
   SigninIndexRoute: typeof SigninIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
 }
@@ -145,6 +197,8 @@ const rootRouteChildren: RootRouteChildren = {
   rootIndexRoute: rootIndexRoute,
   ChatIndexRoute: ChatIndexRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
+  ResetPasswordIndexRoute: ResetPasswordIndexRoute,
   SigninIndexRoute: SigninIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
 }
@@ -162,6 +216,8 @@ export const routeTree = rootRoute
         "/(root)/",
         "/chat/",
         "/dashboard/",
+        "/forgot-password/",
+        "/reset-password/",
         "/signin/",
         "/signup/"
       ]
@@ -174,6 +230,12 @@ export const routeTree = rootRoute
     },
     "/dashboard/": {
       "filePath": "dashboard/index.tsx"
+    },
+    "/forgot-password/": {
+      "filePath": "forgot-password/index.tsx"
+    },
+    "/reset-password/": {
+      "filePath": "reset-password/index.tsx"
     },
     "/signin/": {
       "filePath": "signin/index.tsx"
