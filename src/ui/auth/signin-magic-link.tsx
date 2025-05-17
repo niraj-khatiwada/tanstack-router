@@ -75,18 +75,23 @@ function SignInMagicLink({
             )}
           </form.Field>
           <form.Subscribe
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => (
+            selector={(state) => ({
+              canSubmit: state.canSubmit,
+              isSubmitting: state.isSubmitting,
+              isDirty: state.isDirty,
+            })}
+          >
+            {({ canSubmit, isSubmitting, isDirty }) => (
               <Button
                 type="submit"
                 className="w-full bg-primary text-white py-2 rounded-xl"
-                isDisabled={!canSubmit}
+                isDisabled={!canSubmit || !isDirty}
                 isLoading={isSubmitting}
               >
                 Send Magic Link
               </Button>
             )}
-          />
+          </form.Subscribe>
         </form>
       ) : (
         <Button

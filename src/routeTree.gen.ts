@@ -12,9 +12,11 @@
 
 import { Route as rootIndexImport } from './routes/(root)/index'
 import { Route as rootRoute } from './routes/__root'
+import { Route as AccountSettingsIndexImport } from './routes/account/settings/index'
 import { Route as ChatIndexImport } from './routes/chat/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as ForgotPasswordIndexImport } from './routes/forgot-password/index'
+import { Route as LogoutIndexImport } from './routes/logout/index'
 import { Route as ResetPasswordIndexImport } from './routes/reset-password/index'
 import { Route as SigninIndexImport } from './routes/signin/index'
 import { Route as SignupIndexImport } from './routes/signup/index'
@@ -39,6 +41,12 @@ const ResetPasswordIndexRoute = ResetPasswordIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const LogoutIndexRoute = LogoutIndexImport.update({
+  id: '/logout/',
+  path: '/logout/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ForgotPasswordIndexRoute = ForgotPasswordIndexImport.update({
   id: '/forgot-password/',
   path: '/forgot-password/',
@@ -60,6 +68,12 @@ const ChatIndexRoute = ChatIndexImport.update({
 const rootIndexRoute = rootIndexImport.update({
   id: '/(root)/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountSettingsIndexRoute = AccountSettingsIndexImport.update({
+  id: '/account/settings/',
+  path: '/account/settings/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -95,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordIndexImport
       parentRoute: typeof rootRoute
     }
+    '/logout/': {
+      id: '/logout/'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/reset-password/': {
       id: '/reset-password/'
       path: '/reset-password'
@@ -116,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupIndexImport
       parentRoute: typeof rootRoute
     }
+    '/account/settings/': {
+      id: '/account/settings/'
+      path: '/account/settings'
+      fullPath: '/account/settings'
+      preLoaderRoute: typeof AccountSettingsIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -126,9 +154,11 @@ export interface FileRoutesByFullPath {
   '/chat': typeof ChatIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/logout': typeof LogoutIndexRoute
   '/reset-password': typeof ResetPasswordIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
+  '/account/settings': typeof AccountSettingsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -136,9 +166,11 @@ export interface FileRoutesByTo {
   '/chat': typeof ChatIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/logout': typeof LogoutIndexRoute
   '/reset-password': typeof ResetPasswordIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
+  '/account/settings': typeof AccountSettingsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -147,9 +179,11 @@ export interface FileRoutesById {
   '/chat/': typeof ChatIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
+  '/logout/': typeof LogoutIndexRoute
   '/reset-password/': typeof ResetPasswordIndexRoute
   '/signin/': typeof SigninIndexRoute
   '/signup/': typeof SignupIndexRoute
+  '/account/settings/': typeof AccountSettingsIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -159,27 +193,33 @@ export interface FileRouteTypes {
     | '/chat'
     | '/dashboard'
     | '/forgot-password'
+    | '/logout'
     | '/reset-password'
     | '/signin'
     | '/signup'
+    | '/account/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/chat'
     | '/dashboard'
     | '/forgot-password'
+    | '/logout'
     | '/reset-password'
     | '/signin'
     | '/signup'
+    | '/account/settings'
   id:
     | '__root__'
     | '/(root)/'
     | '/chat/'
     | '/dashboard/'
     | '/forgot-password/'
+    | '/logout/'
     | '/reset-password/'
     | '/signin/'
     | '/signup/'
+    | '/account/settings/'
   fileRoutesById: FileRoutesById
 }
 
@@ -188,9 +228,11 @@ export interface RootRouteChildren {
   ChatIndexRoute: typeof ChatIndexRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   ForgotPasswordIndexRoute: typeof ForgotPasswordIndexRoute
+  LogoutIndexRoute: typeof LogoutIndexRoute
   ResetPasswordIndexRoute: typeof ResetPasswordIndexRoute
   SigninIndexRoute: typeof SigninIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
+  AccountSettingsIndexRoute: typeof AccountSettingsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -198,9 +240,11 @@ const rootRouteChildren: RootRouteChildren = {
   ChatIndexRoute: ChatIndexRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
+  LogoutIndexRoute: LogoutIndexRoute,
   ResetPasswordIndexRoute: ResetPasswordIndexRoute,
   SigninIndexRoute: SigninIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
+  AccountSettingsIndexRoute: AccountSettingsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -217,9 +261,11 @@ export const routeTree = rootRoute
         "/chat/",
         "/dashboard/",
         "/forgot-password/",
+        "/logout/",
         "/reset-password/",
         "/signin/",
-        "/signup/"
+        "/signup/",
+        "/account/settings/"
       ]
     },
     "/(root)/": {
@@ -234,6 +280,9 @@ export const routeTree = rootRoute
     "/forgot-password/": {
       "filePath": "forgot-password/index.tsx"
     },
+    "/logout/": {
+      "filePath": "logout/index.tsx"
+    },
     "/reset-password/": {
       "filePath": "reset-password/index.tsx"
     },
@@ -242,6 +291,9 @@ export const routeTree = rootRoute
     },
     "/signup/": {
       "filePath": "signup/index.tsx"
+    },
+    "/account/settings/": {
+      "filePath": "account/settings/index.tsx"
     }
   }
 }

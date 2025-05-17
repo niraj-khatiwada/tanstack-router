@@ -9,7 +9,11 @@ import {
 import { client as _heyApiClient } from './client.gen'
 import type {
   FileControllerUploadFileData,
+  FileControllerUploadFileError,
+  FileControllerUploadFileResponse,
   FileControllerUploadFilesData,
+  FileControllerUploadFilesError,
+  FileControllerUploadFilesResponse,
   HealthControllerCheckData,
   HealthControllerCheckError,
   HealthControllerCheckResponse,
@@ -28,6 +32,9 @@ import type {
   UserControllerGetCurrentUserData,
   UserControllerGetCurrentUserError,
   UserControllerGetCurrentUserResponse,
+  UserControllerUpdateUserProfileData,
+  UserControllerUpdateUserProfileError,
+  UserControllerUpdateUserProfileResponse,
 } from './types.gen'
 
 export type Options<
@@ -191,22 +198,58 @@ export const userControllerFindUser = <ThrowOnError extends boolean = false>(
 }
 
 /**
+ * Update user's profile
+ */
+export const userControllerUpdateUserProfile = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<UserControllerUpdateUserProfileData, ThrowOnError>,
+) => {
+  return (options.client ?? _heyApiClient).patch<
+    UserControllerUpdateUserProfileResponse,
+    UserControllerUpdateUserProfileError,
+    ThrowOnError
+  >({
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http',
+      },
+    ],
+    url: '/api/v1/user/profile',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options?.headers,
+    },
+  })
+}
+
+/**
  * Uploads a single file
  */
 export const fileControllerUploadFile = <ThrowOnError extends boolean = false>(
   options: Options<FileControllerUploadFileData, ThrowOnError>,
 ) => {
-  return (options.client ?? _heyApiClient).post<unknown, unknown, ThrowOnError>(
-    {
-      ...formDataBodySerializer,
-      url: '/api/v1/file/upload/single',
-      ...options,
-      headers: {
-        'Content-Type': null,
-        ...options?.headers,
+  return (options.client ?? _heyApiClient).post<
+    FileControllerUploadFileResponse,
+    FileControllerUploadFileError,
+    ThrowOnError
+  >({
+    ...formDataBodySerializer,
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http',
       },
+    ],
+    url: '/api/v1/file/upload/single',
+    ...options,
+    headers: {
+      'Content-Type': null,
+      ...options?.headers,
     },
-  )
+  })
 }
 
 /**
@@ -215,15 +258,23 @@ export const fileControllerUploadFile = <ThrowOnError extends boolean = false>(
 export const fileControllerUploadFiles = <ThrowOnError extends boolean = false>(
   options: Options<FileControllerUploadFilesData, ThrowOnError>,
 ) => {
-  return (options.client ?? _heyApiClient).post<unknown, unknown, ThrowOnError>(
-    {
-      ...formDataBodySerializer,
-      url: '/api/v1/file/upload/multiple',
-      ...options,
-      headers: {
-        'Content-Type': null,
-        ...options?.headers,
+  return (options.client ?? _heyApiClient).post<
+    FileControllerUploadFilesResponse,
+    FileControllerUploadFilesError,
+    ThrowOnError
+  >({
+    ...formDataBodySerializer,
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http',
       },
+    ],
+    url: '/api/v1/file/upload/multiple',
+    ...options,
+    headers: {
+      'Content-Type': null,
+      ...options?.headers,
     },
-  )
+  })
 }

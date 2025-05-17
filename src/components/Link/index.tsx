@@ -5,20 +5,18 @@ import {
 } from '@tanstack/react-router'
 import React from 'react'
 
-interface LinkProps {
+interface LinkProps extends LProps {
   href?: LProps['to']
   to?: LProps['to']
 }
 
+function NativeLinkRenderer(props: LProps) {
+  return <NativeLink to={props.to! as any} {...props} />
+}
+
 function Link(props: LinkProps & Omit<NextLinkProps, 'href'>) {
-  const { ...nextLinkProps } = props
-  return (
-    <NextLink
-      as={NativeLink}
-      {...nextLinkProps}
-      href={props.href ?? props.to}
-    />
-  )
+  const { href, to, ...nextLinkProps } = props
+  return <NextLink as={NativeLinkRenderer} {...nextLinkProps} to={href ?? to} />
 }
 
 export default Link

@@ -16,9 +16,9 @@ function Dashboard() {
   )
 
   return (
-    <>
+    <div className="max-w-xl mx-auto px-6">
       <h1 className="text-2xl">Users:</h1>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
+    </div>
   )
 }

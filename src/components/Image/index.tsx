@@ -3,6 +3,7 @@ import {
   type ImageProps as NextUIImageProps,
 } from '@heroui/react'
 import React from 'react'
+import { handleFileUrl } from '~/utils/file'
 
 interface ImageProps {
   src: string
@@ -21,6 +22,7 @@ function Image(props: ImageProps & Exclude<NextUIImageProps, 'src'>) {
         setIsFallbackImage(true)
       }}
       {...nextImageProps}
+      src={handleFileUrl(props?.src)}
       {...(isFallbackImage
         ? {
             src:

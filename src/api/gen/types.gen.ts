@@ -28,6 +28,9 @@ export type UserDto = {
   role: 'User' | 'Admin'
   username: string
   email: string
+  firstName?: string
+  lastName?: string
+  image?: string
   createdAt: string
   updatedAt: string
   bio?: string
@@ -67,6 +70,21 @@ export type CursorPaginatedDto = {
 export type CursorPaginatedUserDto = {
   data: Array<UserDto>
   pagination: CursorPaginationDto
+}
+
+export type UpdateUserProfileDto = {
+  username?: string
+  firstName?: string | null
+  lastName?: string | null
+  image?: string | null
+}
+
+export type FileDto = {
+  originalname: string
+  filename: string
+  mimetype: string
+  size: string
+  path: string
 }
 
 export type PrometheusControllerIndexData = {
@@ -371,6 +389,53 @@ export type UserControllerFindUserResponses = {
 export type UserControllerFindUserResponse =
   UserControllerFindUserResponses[keyof UserControllerFindUserResponses]
 
+export type UserControllerUpdateUserProfileData = {
+  body: UpdateUserProfileDto
+  path?: never
+  query?: never
+  url: '/api/v1/user/profile'
+}
+
+export type UserControllerUpdateUserProfileErrors = {
+  /**
+   * Bad Request
+   */
+  400: ErrorDto
+  /**
+   * Unauthorized
+   */
+  401: ErrorDto
+  /**
+   * Forbidden
+   */
+  403: ErrorDto
+  /**
+   * Not Found
+   */
+  404: ErrorDto
+  /**
+   * Unprocessable Entity
+   */
+  422: ErrorDto
+  /**
+   * Internal Server Error
+   */
+  500: ErrorDto
+}
+
+export type UserControllerUpdateUserProfileError =
+  UserControllerUpdateUserProfileErrors[keyof UserControllerUpdateUserProfileErrors]
+
+export type UserControllerUpdateUserProfileResponses = {
+  /**
+   * OK
+   */
+  200: UserDto
+}
+
+export type UserControllerUpdateUserProfileResponse =
+  UserControllerUpdateUserProfileResponses[keyof UserControllerUpdateUserProfileResponses]
+
 export type FileControllerUploadFileData = {
   body: {
     file?: Blob | File
@@ -380,9 +445,45 @@ export type FileControllerUploadFileData = {
   url: '/api/v1/file/upload/single'
 }
 
-export type FileControllerUploadFileResponses = {
-  201: unknown
+export type FileControllerUploadFileErrors = {
+  /**
+   * Bad Request
+   */
+  400: ErrorDto
+  /**
+   * Unauthorized
+   */
+  401: ErrorDto
+  /**
+   * Forbidden
+   */
+  403: ErrorDto
+  /**
+   * Not Found
+   */
+  404: ErrorDto
+  /**
+   * Unprocessable Entity
+   */
+  422: ErrorDto
+  /**
+   * Internal Server Error
+   */
+  500: ErrorDto
 }
+
+export type FileControllerUploadFileError =
+  FileControllerUploadFileErrors[keyof FileControllerUploadFileErrors]
+
+export type FileControllerUploadFileResponses = {
+  /**
+   * OK
+   */
+  200: FileDto
+}
+
+export type FileControllerUploadFileResponse =
+  FileControllerUploadFileResponses[keyof FileControllerUploadFileResponses]
 
 export type FileControllerUploadFilesData = {
   body: {
@@ -393,9 +494,45 @@ export type FileControllerUploadFilesData = {
   url: '/api/v1/file/upload/multiple'
 }
 
-export type FileControllerUploadFilesResponses = {
-  201: unknown
+export type FileControllerUploadFilesErrors = {
+  /**
+   * Bad Request
+   */
+  400: ErrorDto
+  /**
+   * Unauthorized
+   */
+  401: ErrorDto
+  /**
+   * Forbidden
+   */
+  403: ErrorDto
+  /**
+   * Not Found
+   */
+  404: ErrorDto
+  /**
+   * Unprocessable Entity
+   */
+  422: ErrorDto
+  /**
+   * Internal Server Error
+   */
+  500: ErrorDto
 }
+
+export type FileControllerUploadFilesError =
+  FileControllerUploadFilesErrors[keyof FileControllerUploadFilesErrors]
+
+export type FileControllerUploadFilesResponses = {
+  /**
+   * OK
+   */
+  200: FileDto
+}
+
+export type FileControllerUploadFilesResponse =
+  FileControllerUploadFilesResponses[keyof FileControllerUploadFilesResponses]
 
 export type ClientOptions = {
   baseUrl: 'http://localhost:8000' | (string & {})

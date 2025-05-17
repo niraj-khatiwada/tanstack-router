@@ -7,15 +7,17 @@ import React from 'react'
 
 import { cn } from '~/utils/tailwind'
 
-export interface ButtonProps extends Omit<NextButtonProps, 'className'> {
+export interface ButtonProps
+  extends Omit<NextButtonProps, 'className' | 'onClick'> {
   color?: NextButtonProps['color']
   variant?: NextButtonProps['variant']
   className?: ClassValue
+  onClick?: NextButtonProps['onPress']
 }
 
 const Button = React.forwardRef(
   (props: ButtonProps, ref: NextButtonProps['ref']) => {
-    const { color, variant, className, ...nextButtonProps } = props
+    const { color, variant, className, onClick, ...nextButtonProps } = props
 
     return (
       <NextButton
@@ -25,6 +27,7 @@ const Button = React.forwardRef(
         variant={variant ?? 'flat'}
         {...nextButtonProps}
         className={cn(['font-medium', className])}
+        onPress={props?.onPress ?? onClick}
       />
     )
   },

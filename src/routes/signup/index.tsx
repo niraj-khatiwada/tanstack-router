@@ -115,18 +115,23 @@ function SignUp() {
               )}
             </form.Field>
             <form.Subscribe
-              selector={(state) => [state.canSubmit, state.isSubmitting]}
-              children={([canSubmit, isSubmitting]) => (
+              selector={(state) => ({
+                canSubmit: state.canSubmit,
+                isSubmitting: state.isSubmitting,
+                isDirty: state.isDirty,
+              })}
+            >
+              {({ canSubmit, isSubmitting, isDirty }) => (
                 <Button
                   type="submit"
                   className="w-full bg-primary text-white py-2 rounded-xl"
-                  isDisabled={!canSubmit}
+                  isDisabled={!canSubmit || !isDirty}
                   isLoading={isSubmitting}
                 >
                   Sign Up
                 </Button>
               )}
-            />
+            </form.Subscribe>
             <Button
               variant="light"
               className="text-sm mx-auto w-fit text-center block text-black dark:text-white"

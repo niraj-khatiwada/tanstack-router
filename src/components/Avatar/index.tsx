@@ -3,11 +3,28 @@ import {
   type AvatarProps as NextUIAvatarProps,
 } from '@heroui/react'
 import React from 'react'
+import { handleFileUrl } from '~/utils/file'
+import Image from '../Image'
 
-interface AvatarProps extends NextUIAvatarProps {}
+export interface AvatarProps extends NextUIAvatarProps {}
 
 function Avatar(props: AvatarProps) {
-  return <NextUIAvatar {...props} />
+  return (
+    <NextUIAvatar
+      {...props}
+      // There's some issue with image not loading on update. That's why we needed to explicitly assign a image component
+      ImgComponent={(...p) => (
+        <Image
+          src={props?.src!}
+          alt={props?.alt!}
+          className="object-cover w-full h-full"
+          removeWrapper
+          {...p}
+        />
+      )}
+      src={handleFileUrl(props?.src!)}
+    />
+  )
 }
 
 export default Avatar

@@ -3,7 +3,6 @@
 import {
   infiniteQueryOptions,
   queryOptions,
-  type DefaultError,
   type InfiniteData,
   type UseMutationOptions,
 } from '@tanstack/react-query'
@@ -18,11 +17,16 @@ import {
   userControllerFindAllUsersCursor,
   userControllerFindUser,
   userControllerGetCurrentUser,
+  userControllerUpdateUserProfile,
   type Options,
 } from '../sdk.gen'
 import type {
   FileControllerUploadFileData,
+  FileControllerUploadFileError,
+  FileControllerUploadFileResponse,
   FileControllerUploadFilesData,
+  FileControllerUploadFilesError,
+  FileControllerUploadFilesResponse,
   HealthControllerCheckData,
   PrometheusControllerIndexData,
   UserControllerDeleteUserData,
@@ -33,6 +37,9 @@ import type {
   UserControllerFindAllUsersResponse,
   UserControllerFindUserData,
   UserControllerGetCurrentUserData,
+  UserControllerUpdateUserProfileData,
+  UserControllerUpdateUserProfileError,
+  UserControllerUpdateUserProfileResponse,
 } from '../types.gen'
 
 export type QueryKey<TOptions extends Options> = [
@@ -301,6 +308,30 @@ export const userControllerFindUserOptions = (
   })
 }
 
+export const userControllerUpdateUserProfileMutation = (
+  options?: Partial<Options<UserControllerUpdateUserProfileData>>,
+): UseMutationOptions<
+  UserControllerUpdateUserProfileResponse,
+  UserControllerUpdateUserProfileError,
+  Options<UserControllerUpdateUserProfileData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    UserControllerUpdateUserProfileResponse,
+    UserControllerUpdateUserProfileError,
+    Options<UserControllerUpdateUserProfileData>
+  > = {
+    mutationFn: async (localOptions) => {
+      const { data } = await userControllerUpdateUserProfile({
+        ...options,
+        ...localOptions,
+        throwOnError: true,
+      })
+      return data
+    },
+  }
+  return mutationOptions
+}
+
 export const fileControllerUploadFileQueryKey = (
   options: Options<FileControllerUploadFileData>,
 ) => createQueryKey('fileControllerUploadFile', options)
@@ -325,13 +356,13 @@ export const fileControllerUploadFileOptions = (
 export const fileControllerUploadFileMutation = (
   options?: Partial<Options<FileControllerUploadFileData>>,
 ): UseMutationOptions<
-  unknown,
-  DefaultError,
+  FileControllerUploadFileResponse,
+  FileControllerUploadFileError,
   Options<FileControllerUploadFileData>
 > => {
   const mutationOptions: UseMutationOptions<
-    unknown,
-    DefaultError,
+    FileControllerUploadFileResponse,
+    FileControllerUploadFileError,
     Options<FileControllerUploadFileData>
   > = {
     mutationFn: async (localOptions) => {
@@ -370,13 +401,13 @@ export const fileControllerUploadFilesOptions = (
 export const fileControllerUploadFilesMutation = (
   options?: Partial<Options<FileControllerUploadFilesData>>,
 ): UseMutationOptions<
-  unknown,
-  DefaultError,
+  FileControllerUploadFilesResponse,
+  FileControllerUploadFilesError,
   Options<FileControllerUploadFilesData>
 > => {
   const mutationOptions: UseMutationOptions<
-    unknown,
-    DefaultError,
+    FileControllerUploadFilesResponse,
+    FileControllerUploadFilesError,
     Options<FileControllerUploadFilesData>
   > = {
     mutationFn: async (localOptions) => {

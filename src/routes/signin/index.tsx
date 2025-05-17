@@ -4,6 +4,7 @@ import {
   useLocation,
   useNavigate,
 } from '@tanstack/react-router'
+import { useEffect } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import Button from '~/components/Button'
@@ -38,7 +39,7 @@ function SignIn() {
   const form = useForm({
     defaultValues: { emailOrUsername: '', password: '' } as SignInSchema,
     validators: {
-      onChange: signInSchema,
+      onSubmit: signInSchema,
     },
     async onSubmit({ value }) {
       const isEmail = z
@@ -66,6 +67,12 @@ function SignIn() {
       }
     },
   })
+
+  useEffect(() => {
+    if (!(hash in locationHash)) {
+      navigate({ to: '.', hash: '', search })
+    }
+  }, [hash, navigate, search])
 
   return (
     <div className="mt-[20%]">
@@ -108,18 +115,23 @@ function SignIn() {
                 )}
               </form.Field>
               <form.Subscribe
-                selector={(state) => [state.canSubmit, state.isSubmitting]}
-                children={([canSubmit, isSubmitting]) => (
+                selector={(state) => ({
+                  canSubmit: state.canSubmit,
+                  isSubmitting: state.isSubmitting,
+                  isDirty: state.isDirty,
+                })}
+              >
+                {({ canSubmit, isSubmitting, isDirty }) => (
                   <Button
                     type="submit"
                     className="w-full bg-primary text-white py-2 rounded-xl"
-                    isDisabled={!canSubmit}
+                    isDisabled={!canSubmit || !isDirty}
                     isLoading={isSubmitting}
                   >
                     Sign In
                   </Button>
                 )}
-              />
+              </form.Subscribe>
             </form>
             <Link
               to="/forgot-password"
