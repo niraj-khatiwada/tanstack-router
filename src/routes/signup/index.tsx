@@ -8,7 +8,7 @@ import Button from '~/components/Button'
 import TextInput from '~/components/Input/TextInput'
 import Link from '~/components/Link'
 import { auth } from '~/libs/auth'
-import GithubOAuth from '~/ui/auth/github-oauth'
+import GithubOAuth from '~/ui/auth/GithubOAuth'
 import AlertDialog from '~/ui/dialogs/AlertDialog'
 import { preventRouteBeforeLoad } from '~/utils/router/before-load'
 

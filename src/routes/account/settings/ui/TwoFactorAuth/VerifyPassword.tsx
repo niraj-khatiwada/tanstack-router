@@ -12,7 +12,7 @@ const verifyPasswordSchema = z.object({
 type VerifyPasswordSchema = z.infer<typeof verifyPasswordSchema>
 
 type VerifyPasswordProps = {
-  onSubmit?: (_: { password: string }) => Promise<void>
+  onSubmit?: (_: { password: string }) => Promise<void> | void
 }
 
 function VerifyPassword({ onSubmit }: VerifyPasswordProps) {

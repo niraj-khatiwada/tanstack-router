@@ -12,8 +12,9 @@ import TextInput from '~/components/Input/TextInput'
 import Link from '~/components/Link'
 import { getCurrentSession } from '~/hooks/useCurrentSession'
 import { auth } from '~/libs/auth'
-import GithubOAuth from '~/ui/auth/github-oauth'
-import SignInMagicLink from '~/ui/auth/signin-magic-link'
+import Verify2FaCode from '~/ui/auth/2fa/2faVerificationModal'
+import GithubOAuth from '~/ui/auth/GithubOAuth'
+import SignInMagicLink from '~/ui/auth/SignInMagicLink'
 import { preventRouteBeforeLoad } from '~/utils/router/before-load'
 
 export const Route = createFileRoute('/signin/')({
@@ -48,7 +49,7 @@ function SignIn() {
         .email()
         .safeParse(value.emailOrUsername).success
       try {
-        const { error } = await (isEmail
+        const { error, data } = await (isEmail
           ? auth.signIn.email({
               email: value.emailOrUsername,
               password: value.password,
@@ -62,10 +63,13 @@ function SignIn() {
           toast.error(error?.message ?? '')
           return
         }
-
         form.reset()
-        await getCurrentSession({ networkMode: 'online' })
-        navigate({ to: search.redirectTo ?? '/dashboard' })
+
+        if (data.token) {
+          await getCurrentSession({ networkMode: 'online' })
+          navigate({ to: search.redirectTo ?? '/dashboard' })
+        }
+        // Might have 2fa
       } catch (error: any) {
         toast.error(error?.message ?? '')
       }
@@ -193,6 +197,11 @@ function SignIn() {
           )}
         </div>
       </div>
+      <Verify2FaCode
+        onComplete={() => {
+          navigate({ to: search.redirectTo ?? '/dashboard' })
+        }}
+      />
     </div>
   )
 }

@@ -16,7 +16,7 @@ type VerifyOTPSchema = z.infer<typeof verifyOTPSchema>
 type OTPQrCodeProps = {
   url: string
   disableOTPVerification?: boolean
-  onVerificationSubmit?: (_: { otp: string }) => Promise<void>
+  onVerificationSubmit?: (_: { otp: string }) => Promise<void> | void
 }
 
 function OTPQrCode({
