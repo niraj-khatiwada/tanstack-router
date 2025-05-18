@@ -1,5 +1,5 @@
 import { BeforeLoadContextOptions, redirect } from '@tanstack/react-router'
-import { auth } from '~/libs/auth'
+import { getCurrentSession } from '~/hooks/useCurrentSession'
 
 /**
  * Protect routes access when there's no auth
@@ -8,8 +8,14 @@ import { auth } from '~/libs/auth'
 export async function protectRouteBeforeLoad(
   params: BeforeLoadContextOptions<any, any, any, any, any>,
 ) {
-  const { data } = await auth.getSession()
-  if (data?.session == null) {
+  try {
+    const currentSession = await getCurrentSession({
+      networkMode: 'cache-only',
+    })
+    if (currentSession == null) {
+      throw new Error()
+    }
+  } catch (err) {
     throw redirect({
       to: '/signin',
       search: { redirectTo: params.location.href },
@@ -22,10 +28,26 @@ export async function protectRouteBeforeLoad(
  * For example: Sign in, Sign up page, etc.
  */
 export async function preventRouteBeforeLoad(
-  _: BeforeLoadContextOptions<any, any, any, any, any>,
+  params: BeforeLoadContextOptions<any, any, any, any, any>,
 ) {
-  const { data } = await auth.getSession()
-  if (data?.session) {
-    throw redirect({ to: '/' })
+  let currentSession: Awaited<ReturnType<typeof getCurrentSession>> | null =
+    null
+  try {
+    currentSession = await getCurrentSession({ networkMode: 'cache-only' })
+  } catch {
+    //
+  }
+  let redirectTo = params?.search?.redirectTo as any
+  if (
+    redirectTo &&
+    typeof redirectTo === 'string' &&
+    !redirectTo?.startsWith('/')
+  ) {
+    redirectTo = `/${redirectTo}`
+  }
+  if (currentSession !== null) {
+    throw redirect({
+      to: (redirectTo as any) ?? '/',
+    })
   }
 }

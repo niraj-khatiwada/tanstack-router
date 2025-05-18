@@ -20,6 +20,9 @@ function Avatar(props: AvatarProps) {
           className="object-cover w-full h-full"
           removeWrapper
           {...p}
+          {...(props?.disableAnimation
+            ? { disableAnimation: props?.disableAnimation }
+            : {})}
         />
       )}
       src={handleFileUrl(props?.src!)}

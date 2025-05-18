@@ -7,7 +7,7 @@ import React from 'react'
 interface SkeletonProps extends NextUISkeletonProps {}
 
 function Skeleton(props: SkeletonProps) {
-  return <NextUISkeleton {...props} />
+  return <NextUISkeleton disableAnimation {...props} />
 }
 
 export default Skeleton

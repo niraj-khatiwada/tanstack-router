@@ -10,6 +10,7 @@ import { z } from 'zod'
 import Button from '~/components/Button'
 import TextInput from '~/components/Input/TextInput'
 import Link from '~/components/Link'
+import { getCurrentSession } from '~/hooks/useCurrentSession'
 import { auth } from '~/libs/auth'
 import GithubOAuth from '~/ui/auth/github-oauth'
 import SignInMagicLink from '~/ui/auth/signin-magic-link'
@@ -61,6 +62,7 @@ function SignIn() {
           return
         }
         form.reset()
+        await getCurrentSession({ networkMode: 'online' })
         navigate({ to: search.redirectTo ?? '/dashboard' })
       } catch (error: any) {
         toast.error(error?.message ?? '')

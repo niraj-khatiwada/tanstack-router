@@ -6,8 +6,6 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@heroui/react'
-import { useQuery } from '@tanstack/react-query'
-import { userControllerGetCurrentUserOptions } from '~/api/gen/@tanstack/react-query.gen'
 import useCurrentSession from '~/hooks/useCurrentSession'
 import ThemeSwitcher from '~/ui/theme-switcher'
 import Avatar from '../Avatar'
@@ -17,12 +15,7 @@ import Link from '../Link'
 
 function Navbar() {
   const { data: currentSession } = useCurrentSession()
-
-  const getCurrentUserOptions = userControllerGetCurrentUserOptions()
-  const { data: user } = useQuery({
-    ...getCurrentUserOptions,
-    enabled: Boolean(currentSession),
-  })
+  const user = currentSession?.user
 
   return (
     <HeroNavbar maxWidth="xl">
@@ -38,7 +31,11 @@ function Navbar() {
             <Dropdown backdrop="blur">
               <DropdownTrigger>
                 <Button className="min-w-0 p-0 bg-none!">
-                  <Avatar size="sm" src={user?.image as string} />
+                  <Avatar
+                    size="sm"
+                    src={user?.image as string}
+                    disableAnimation
+                  />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu variant="light">

@@ -13,7 +13,7 @@ import Button from '~/components/Button'
 import FileInput from '~/components/Input/FileInput'
 import TextInput from '~/components/Input/TextInput'
 import Skeleton from '~/components/Skeleton'
-import { auth } from '~/libs/auth'
+import { CURRENT_SESSION_QUERY_KEY } from '~/hooks/useCurrentSession'
 import { cn } from '~/utils/tailwind'
 
 const profileSchema = z.object({
@@ -73,14 +73,18 @@ function Profile() {
             firstName: value.firstName,
             lastName: value.lastName,
             image:
-              value.imageFile && fileResponse ? fileResponse.filename : null,
+              value.imageFile && fileResponse
+                ? fileResponse.filename
+                : undefined,
           },
         })
         queryClient.invalidateQueries({
-          queryKey: [...getCurrentUserOptions.queryKey],
+          queryKey: getCurrentUserOptions.queryKey,
+        })
+        queryClient.invalidateQueries({
+          queryKey: [CURRENT_SESSION_QUERY_KEY],
         })
         toast.success('Profile updated successfully.')
-        auth.getSession()
       } catch (error: any) {
         toast.error(error?.message ?? '')
       }

@@ -29,7 +29,7 @@ function Logout() {
     } catch {
       //
     }
-    navigate({ to: '/', replace: true })
+    navigate({ to: '/', replace: true, reloadDocument: true })
   }
 
   useEffect(() => {

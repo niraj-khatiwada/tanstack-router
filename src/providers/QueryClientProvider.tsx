@@ -1,9 +1,14 @@
 'use client'
 
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import {
   QueryClient,
   QueryClientProvider as ReactQueryClientProvider,
 } from '@tanstack/react-query'
+import {
+  persistQueryClient,
+  removeOldestQuery,
+} from '@tanstack/react-query-persist-client'
 
 import { client } from '~/api/gen/client.gen'
 import { env } from '~/utils/env'
@@ -13,16 +18,34 @@ client.setConfig({
   credentials: 'include',
 })
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
       refetchOnReconnect: true,
       gcTime: 1e4 * 60,
+      retry: 3,
     },
     mutations: {
       retry: 0,
     },
+  },
+})
+
+const PERSISTER_KEY = 'UkVBQ1RfUVVFUll'
+
+const localStoragePersister = createSyncStoragePersister({
+  storage: window.localStorage,
+  retry: removeOldestQuery,
+  key: PERSISTER_KEY,
+})
+
+persistQueryClient({
+  // @ts-ignore: No idea what this error mean
+  queryClient,
+  persister: localStoragePersister,
+  dehydrateOptions: {
+    shouldDehydrateQuery: (query) => query?.meta?.persist === true,
   },
 })
 
