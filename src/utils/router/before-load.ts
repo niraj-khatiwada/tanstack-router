@@ -28,7 +28,7 @@ export async function protectRouteBeforeLoad(
  * For example: Sign in, Sign up page, etc.
  */
 export async function preventRouteBeforeLoad(
-  params: BeforeLoadContextOptions<any, any, any, any, any>,
+  _: BeforeLoadContextOptions<any, any, any, any, any>,
 ) {
   let currentSession: Awaited<ReturnType<typeof getCurrentSession>> | null =
     null
@@ -37,17 +37,9 @@ export async function preventRouteBeforeLoad(
   } catch {
     //
   }
-  let redirectTo = params?.search?.redirectTo as any
-  if (
-    redirectTo &&
-    typeof redirectTo === 'string' &&
-    !redirectTo?.startsWith('/')
-  ) {
-    redirectTo = `/${redirectTo}`
-  }
-  if (currentSession !== null) {
+  if (!(currentSession == null)) {
     throw redirect({
-      to: (redirectTo as any) ?? '/',
+      to: '/',
     })
   }
 }

@@ -26,7 +26,7 @@ const Button = React.forwardRef(
         color={color ?? 'default'}
         variant={variant ?? 'flat'}
         {...nextButtonProps}
-        className={cn(['font-medium', className])}
+        className={cn(['font-medium flex', className])}
         onPress={props?.onPress ?? onClick}
       />
     )

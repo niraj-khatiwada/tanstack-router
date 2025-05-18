@@ -42,7 +42,7 @@ function SignUp() {
   const form = useForm({
     defaultValues: { email: '', password: '' } as SignUpSchema,
     validators: {
-      onChange: signupSchema,
+      onSubmit: signupSchema,
     },
     async onSubmit({ value }) {
       try {

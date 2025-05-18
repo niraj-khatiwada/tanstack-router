@@ -30,35 +30,43 @@ function AccountSettings() {
         selectedKey={hash ?? 'account'}
         onSelectionChange={(k) => navigate({ to: '.', hash: k as string })}
       >
-        <Tab key="profile" title="Profile" className="w-full">
+        <Tab key="profile" title="Profile" className="w-full pr-0">
           <Card>
             <CardBody>
               <Profile />
             </CardBody>
           </Card>
         </Tab>
-        <Tab key="sessions" title="Sessions" className="w-full">
+        <Tab key="sessions" title="Sessions" className="w-full pr-0">
           <Card>
             <CardBody>
               <Sessions />
             </CardBody>
           </Card>
         </Tab>
-        <Tab key="change-password" title="Change Password" className="w-full">
+        <Tab
+          key="change-password"
+          title="Change Password"
+          className="w-full pr-0"
+        >
           <Card>
             <CardBody>
               <ChangePassword />
             </CardBody>
           </Card>
         </Tab>
-        <Tab key="2fa" title="Two-Factor Authentication" className="w-full">
+        <Tab
+          key="2fa"
+          title="Two-Factor Authentication"
+          className="w-full pr-0"
+        >
           <Card>
             <CardBody>
               <TwoFactorAuth />
             </CardBody>
           </Card>
         </Tab>
-        <Tab key="pass-keys" title="Pass Keys" className="w-full">
+        <Tab key="pass-keys" title="Pass Keys" className="w-full pr-0">
           <Card>
             <CardBody>
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui

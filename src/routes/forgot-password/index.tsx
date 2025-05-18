@@ -28,7 +28,7 @@ function ForgotPassword() {
   const form = useForm({
     defaultValues: { email: '' } as ForgotPasswordSchema,
     validators: {
-      onChange: forgotPasswordSchema,
+      onSubmit: forgotPasswordSchema,
     },
     async onSubmit({ value }) {
       try {

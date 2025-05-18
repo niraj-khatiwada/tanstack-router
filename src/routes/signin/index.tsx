@@ -57,10 +57,12 @@ function SignIn() {
               username: value.emailOrUsername,
               password: value.password,
             }))
+
         if (error) {
           toast.error(error?.message ?? '')
           return
         }
+
         form.reset()
         await getCurrentSession({ networkMode: 'online' })
         navigate({ to: search.redirectTo ?? '/dashboard' })

@@ -36,7 +36,7 @@ function ResetPassword() {
   const form = useForm({
     defaultValues: { password: '', confirmPassword: '' } as ResetPasswordSchema,
     validators: {
-      onChange: resetPasswordSchema,
+      onSubmit: resetPasswordSchema,
     },
     async onSubmit({ value }) {
       try {

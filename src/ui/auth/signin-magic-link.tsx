@@ -32,7 +32,7 @@ function SignInMagicLink({
   const form = useForm({
     defaultValues: { email: '' } as SignInSchema,
     validators: {
-      onChange: signInSchema,
+      onSubmit: signInSchema,
     },
     async onSubmit({ value }) {
       try {

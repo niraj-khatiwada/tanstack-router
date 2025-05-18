@@ -31,6 +31,7 @@
     "lodash": "^4.17.21",
     "react": "^18",
     "react-dom": "^18",
+    "react-qr-code": "^2.0.15",
     "socket.io-client": "^4.8.1",
     "sonner": "^1.4.41",
     "tailwind-merge": "^1.14.0",

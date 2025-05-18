@@ -121,8 +121,9 @@ function ChangePassword() {
         >
           {({ canSubmit, isSubmitting, isDirty }) => (
             <Button
+              size="sm"
               type="submit"
-              className="block bg-primary text-white py-2 rounded-xl"
+              className="bg-primary text-white py-2 rounded-xl"
               isDisabled={!canSubmit || !isDirty}
               isLoading={isSubmitting}
             >
