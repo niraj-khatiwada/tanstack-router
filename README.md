@@ -4,6 +4,10 @@ This is a client example for [Ultimate Nest.js Boilerplate](https://github.com/n
 
 - TanStack Router
 - Hero UI & TailwindCSS
+- Automatic API generation of backend using OpenAPI Codegen.
+  ```
+  pnpm codegen
+  ```
 - Better Auth for authentication:
   - Email/Password
   - OAuth
