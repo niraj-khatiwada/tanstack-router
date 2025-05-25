@@ -4,11 +4,11 @@ import 'dotenv/config'
 
 // Our Swagger Schema is protected behind a basic authentication. See backend .env for BASIC_AUTH_USERNAME and BASIC_AUTH_PASSWORD
 const API_URL = process.env.VITE_API_URL
-const VITE_CODEGEN_AUTH_USERNAME = process.env.VITE_CODEGEN_AUTH_USERNAME
-const VITE_CODEGEN_AUTH_PASSWORD = process.env.VITE_CODEGEN_AUTH_PASSWORD
+const BASIC_AUTH_USERNAME = process.env.BASIC_AUTH_USERNAME
+const BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD
 
 const base64Credential = Buffer.from(
-  `${VITE_CODEGEN_AUTH_USERNAME}:${VITE_CODEGEN_AUTH_PASSWORD}`,
+  `${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`,
 ).toString('base64')
 
 // @ts-ignore
