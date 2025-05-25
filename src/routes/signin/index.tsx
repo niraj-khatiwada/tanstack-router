@@ -12,9 +12,10 @@ import TextInput from '~/components/Input/TextInput'
 import Link from '~/components/Link'
 import { getCurrentSession } from '~/hooks/useCurrentSession'
 import { auth } from '~/libs/auth'
-import Verify2FaCode from '~/ui/auth/2fa/2faVerificationModal'
+import { use2faStore } from '~/ui/auth/2fa/store'
 import GithubOAuth from '~/ui/auth/GithubOAuth'
 import SignInMagicLink from '~/ui/auth/SignInMagicLink'
+import SignInPassKey from '~/ui/auth/SignInPassKey'
 import { preventRouteBeforeLoad } from '~/utils/router/before-load'
 
 export const Route = createFileRoute('/signin/')({
@@ -81,6 +82,15 @@ function SignIn() {
       navigate({ to: '.', hash: '', search })
     }
   }, [hash, navigate, search])
+
+  useEffect(() => {
+    const unregister = use2faStore.getState().onVerificationComplete(() => {
+      navigate({ to: search.redirectTo ?? '/dashboard' })
+    })
+    return () => {
+      unregister()
+    }
+  }, [navigate, search.redirectTo])
 
   return (
     <div className="mt-[20%]">
@@ -163,6 +173,7 @@ function SignIn() {
                 SignIn with Email
               </Button>
               <GithubOAuth />
+              <SignInPassKey />
             </>
           ) : null}
           {!hash || hash === locationHash.magicLink ? (
@@ -197,11 +208,6 @@ function SignIn() {
           )}
         </div>
       </div>
-      <Verify2FaCode
-        onComplete={() => {
-          navigate({ to: search.redirectTo ?? '/dashboard' })
-        }}
-      />
     </div>
   )
 }

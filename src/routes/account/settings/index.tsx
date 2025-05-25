@@ -7,6 +7,7 @@ import {
 import Tabs from '~/components/Tabs'
 import { protectRouteBeforeLoad } from '~/utils/router/before-load'
 import ChangePassword from './ui/ChangePassword'
+import PassKeys from './ui/PassKeys'
 import Profile from './ui/Profile'
 import Sessions from './ui/Sessions'
 import TwoFactorAuth from './ui/TwoFactorAuth'
@@ -28,7 +29,9 @@ function AccountSettings() {
         aria-label="Account Settings"
         classNames={{ tab: 'justify-start' }}
         selectedKey={hash ?? 'account'}
-        onSelectionChange={(k) => navigate({ to: '.', hash: k as string })}
+        onSelectionChange={(k) =>
+          navigate({ to: '.', hash: k as string, replace: !hash })
+        }
       >
         <Tab key="profile" title="Profile" className="w-full">
           <Card>
@@ -61,8 +64,7 @@ function AccountSettings() {
         <Tab key="pass-keys" title="Pass Keys" className="w-full">
           <Card>
             <CardBody>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
+              <PassKeys />
             </CardBody>
           </Card>
         </Tab>

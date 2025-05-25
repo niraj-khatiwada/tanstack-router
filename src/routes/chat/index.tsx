@@ -10,11 +10,13 @@ export const Route = createFileRoute('/chat/')({
   beforeLoad: protectRouteBeforeLoad,
 })
 
-const socket = io(env.VITE_API_URL, { withCredentials: true })
-
 const MESSAGE_CHANNEL = 'message'
 
 function Chat() {
+  const [socket] = useState(() =>
+    io(env.VITE_API_URL, { withCredentials: true }),
+  )
+
   const [messages, setMessages] = useState<
     { text: string; isServer: boolean }[]
   >([])
@@ -27,7 +29,7 @@ function Chat() {
     return () => {
       socket.off(MESSAGE_CHANNEL)
     }
-  }, [])
+  }, [socket])
 
   const handleSend = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

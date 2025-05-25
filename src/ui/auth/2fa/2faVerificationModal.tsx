@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import Button from '~/components/Button'
+import Icon from '~/components/Icon'
 import OTPInput from '~/components/Input/OTPInput'
 import Modal, { ModalContent } from '~/components/Modal'
 import { getCurrentSession } from '~/hooks/useCurrentSession'
@@ -16,11 +17,7 @@ const verifyOTPSchema = z.object({
 
 type VerifyOTPSchema = z.infer<typeof verifyOTPSchema>
 
-type Verify2FaCodeProps = {
-  onComplete?: () => Promise<void> | void
-}
-
-function Verify2FaCode({ onComplete }: Verify2FaCodeProps) {
+function Verify2FaCode() {
   const otpModalDiscloser = useDisclosure()
 
   const handleClose = () => {
@@ -47,7 +44,7 @@ function Verify2FaCode({ onComplete }: Verify2FaCodeProps) {
         form.reset()
         handleClose()
         await getCurrentSession({ networkMode: 'online' })
-        await onComplete?.()
+        use2faStore.getState().fireVerificationComplete()
       } catch (error: any) {
         toast.error(error?.message ?? 'Something went wrong...')
       }
@@ -78,6 +75,7 @@ function Verify2FaCode({ onComplete }: Verify2FaCodeProps) {
       className="max-w-[22rem] overflow-hidden rounded-2xl"
     >
       <ModalContent className="flex flex-col justify-center items-center pt-1 pb-1 mt-4 px-8 py-6">
+        <Icon name="lock" size={50} className="mb-4 text-primary" />
         <p className="text-xl px-10 text-center font-bold">
           Two Factor Authentication:
         </p>
@@ -103,6 +101,7 @@ function Verify2FaCode({ onComplete }: Verify2FaCodeProps) {
                     .map((e) => e?.message)
                     .join(', ')}
                   onValueChange={(val) => handleChange(val)}
+                  autoFocus
                 />
               </div>
             )}

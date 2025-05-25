@@ -6,7 +6,7 @@ import {
 interface TextAreaPros extends NextUITextAreaProps {}
 
 function TextArea(props: TextAreaPros) {
-  return <NextUITextArea {...props} />
+  return <NextUITextArea size="sm" {...props} />
 }
 
 export default TextArea

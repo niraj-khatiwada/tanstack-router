@@ -6,7 +6,7 @@ import {
 interface TextInputPros extends NextUIInputProps {}
 
 function TextInput(props: TextInputPros) {
-  return <NextUIInput {...props} />
+  return <NextUIInput size="sm" {...props} />
 }
 
 export default TextInput

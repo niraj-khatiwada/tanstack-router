@@ -10,6 +10,7 @@ import Github from '~/assets/icons/github.svg?react'
 import Info from '~/assets/icons/info.svg?react'
 import Laptop from '~/assets/icons/laptop.svg?react'
 import Link from '~/assets/icons/link.svg?react'
+import Lock from '~/assets/icons/lock.svg?react'
 import Logo from '~/assets/icons/logo.svg?react'
 import LowResHeart from '~/assets/icons/low-res-heart.svg?react'
 import Mobile from '~/assets/icons/mobile.svg?react'
@@ -60,6 +61,7 @@ const registry = asRegistry({
   link: Link,
   laptop: Laptop,
   mobile: Mobile,
+  lock: Lock,
 })
 
 export default registry

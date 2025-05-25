@@ -108,7 +108,7 @@ function SignInMagicLink({
       <AlertDialog
         alertType="success"
         title="Check your inbox"
-        description="We've sent you a magic link. Please use that link to sign in."
+        description="We've sent you a magic link. Please use that link from your inbox to sign in."
         discloser={alertDialogDiscloser}
         renderFooter={({ closeModal }) => (
           <Button

@@ -70,6 +70,7 @@ function FileInput(props: FileInputPros) {
         </Button>
       ) : null}
       <NextUIInput
+        size="sm"
         accept={MIME_TYPES?.[type]}
         type="file"
         {..._props}

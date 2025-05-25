@@ -1,5 +1,6 @@
 import {
   magicLinkClient,
+  passkeyClient,
   twoFactorClient,
   usernameClient,
 } from 'better-auth/client/plugins'
@@ -17,6 +18,7 @@ export const auth = createAuthClient({
         use2faStore.getState().setState({ verificationNeeded: true })
       },
     }),
+    passkeyClient(),
   ],
   emailAndPassword: {
     enabled: true,

@@ -25,6 +25,7 @@ const Button = React.forwardRef(
         disableRipple
         color={color ?? 'default'}
         variant={variant ?? 'flat'}
+        size="sm"
         {...nextButtonProps}
         className={cn(['font-medium flex', className])}
         onPress={props?.onPress ?? onClick}
