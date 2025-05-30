@@ -1,6 +1,6 @@
 # Client example app for Ultimate Nest.js Boilerplate
 
-This is a client example for [Ultimate Nest.js Boilerplate](https://github.com/niraj-khatiwada/ultimate-nestjs-boilerplate)
+This is a client example that shows various implmentation mentioned in [Ultimate Nest.js Boilerplate](https://github.com/niraj-khatiwada/ultimate-nestjs-boilerplate)
 
 - TanStack Router
 - Hero UI & TailwindCSS
