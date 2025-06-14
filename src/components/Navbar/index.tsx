@@ -6,8 +6,8 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@heroui/react'
-import useCurrentSession from '~/hooks/useCurrentSession'
-import ThemeSwitcher from '~/ui/theme-switcher'
+import useCurrentSession from 'src/hooks/useCurrentSession'
+import ThemeSwitcher from 'src/ui/theme-switcher'
 import Avatar from '../Avatar'
 import Button from '../Button'
 import Dropdown, { DropdownTrigger } from '../Dropdown'
@@ -55,9 +55,9 @@ function Navbar() {
               </DropdownMenu>
             </Dropdown>
           ) : (
-            <Button as={Link} href="/signin" variant="light">
-              Sign In
-            </Button>
+            <Link to="/signin">
+              <Button variant="light">Sign In</Button>
+            </Link>
           )}
         </NavbarItem>
       </NavbarContent>

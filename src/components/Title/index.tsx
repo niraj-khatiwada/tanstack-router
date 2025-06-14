@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '~/utils/tailwind'
+import { cn } from 'src/utils/tailwind'
 import Icon, { IconProps } from '../Icon'
 
 type TitleProps = {

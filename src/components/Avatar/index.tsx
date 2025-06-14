@@ -3,7 +3,7 @@ import {
   type AvatarProps as NextUIAvatarProps,
 } from '@heroui/react'
 import React from 'react'
-import { handleFileUrl } from '~/utils/file'
+import { handleFileUrl } from 'src/utils/file'
 import Image from '../Image'
 
 export interface AvatarProps extends NextUIAvatarProps {}

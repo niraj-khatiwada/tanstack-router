@@ -4,7 +4,7 @@ import {
 } from '@heroui/react'
 import React from 'react'
 
-import { cn } from '~/utils/tailwind'
+import { cn } from 'src/utils/tailwind'
 
 interface DividerProps extends NextUIDividerProps {}
 

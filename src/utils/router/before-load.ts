@@ -1,5 +1,5 @@
 import { BeforeLoadContextOptions, redirect } from '@tanstack/react-router'
-import { getCurrentSession } from '~/hooks/useCurrentSession'
+import { getCurrentSession } from 'src/hooks/useCurrentSession'
 
 /**
  * Protect routes access when there's no auth

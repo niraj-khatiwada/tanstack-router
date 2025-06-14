@@ -1,7 +1,7 @@
 import React from 'react'
-import Button from '~/components/Button'
-import Icon from '~/components/Icon'
-import { auth } from '~/libs/auth'
+import Button from 'src/components/Button'
+import Icon from 'src/components/Icon'
+import { auth } from 'src/libs/auth'
 
 function GithubOAuth() {
   const handleSignin = async () => {

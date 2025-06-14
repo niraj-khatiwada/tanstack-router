@@ -3,7 +3,7 @@ import {
   type InputProps as NextUIInputProps,
 } from '@heroui/react'
 import { useRef, useState } from 'react'
-import { cn } from '~/utils/tailwind'
+import { cn } from 'src/utils/tailwind'
 import Avatar, { AvatarProps } from '../Avatar'
 import Button from '../Button'
 import Icon from '../Icon'

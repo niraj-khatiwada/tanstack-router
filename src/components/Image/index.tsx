@@ -3,7 +3,7 @@ import {
   type ImageProps as NextUIImageProps,
 } from '@heroui/react'
 import React from 'react'
-import { handleFileUrl } from '~/utils/file'
+import { handleFileUrl } from 'src/utils/file'
 
 interface ImageProps {
   src: string

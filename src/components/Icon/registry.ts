@@ -1,67 +1,30 @@
-import React from 'react'
-
-import Check from '~/assets/icons/check.svg?react'
-import Cross from '~/assets/icons/cross.svg?react'
-import CurvedArrow from '~/assets/icons/curved-arrow.svg?react'
-import DragAndDrop from '~/assets/icons/drag-and-drop.svg?react'
-import Error from '~/assets/icons/error.svg?react'
-import FileExplorer from '~/assets/icons/file-explorer.svg?react'
-import Github from '~/assets/icons/github.svg?react'
-import Info from '~/assets/icons/info.svg?react'
-import Laptop from '~/assets/icons/laptop.svg?react'
-import Link from '~/assets/icons/link.svg?react'
-import Lock from '~/assets/icons/lock.svg?react'
-import Logo from '~/assets/icons/logo.svg?react'
-import LowResHeart from '~/assets/icons/low-res-heart.svg?react'
-import Mobile from '~/assets/icons/mobile.svg?react'
-import Moon from '~/assets/icons/moon.svg?react'
-import Play from '~/assets/icons/play.svg?react'
-import Question from '~/assets/icons/question.svg?react'
-import Redo from '~/assets/icons/redo.svg?react'
-import Save from '~/assets/icons/save.svg?react'
-import Setting from '~/assets/icons/setting.svg?react'
-import Star from '~/assets/icons/star.svg?react'
-import Sun from '~/assets/icons/sun.svg?react'
-import Tick from '~/assets/icons/tick.svg?react'
-import Trash from '~/assets/icons/trash.svg?react'
-import VideoFile from '~/assets/icons/video-file.svg?react'
-import Warning from '~/assets/icons/warning.svg?react'
-
-type SVGAsComponent = React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-
-function asRegistry<T extends string>(
-  arg: Record<T, SVGAsComponent>,
-): Record<T, SVGAsComponent> {
-  return arg
-}
-
-const registry = asRegistry({
-  logo: Logo,
-  moon: Moon,
-  sun: Sun,
-  videoFile: VideoFile,
-  star: Star,
-  cross: Cross,
-  curvedArrow: CurvedArrow,
-  save: Save,
-  tick: Tick,
-  fileExplorer: FileExplorer,
-  play: Play,
-  info: Info,
-  lowResHeart: LowResHeart,
-  github: Github,
-  question: Question,
-  setting: Setting,
-  trash: Trash,
-  dragAndDrop: DragAndDrop,
-  warning: Warning,
-  error: Error,
-  redo: Redo,
-  check: Check,
-  link: Link,
-  laptop: Laptop,
-  mobile: Mobile,
-  lock: Lock,
-})
+const registry = {
+  check: () => import('~/assets/icons/check.svg?react'),
+  cross: () => import('~/assets/icons/cross.svg?react'),
+  curvedArrow: () => import('~/assets/icons/curved-arrow.svg?react'),
+  dragAndDrop: () => import('~/assets/icons/drag-and-drop.svg?react'),
+  error: () => import('~/assets/icons/error.svg?react'),
+  fileExplorer: () => import('~/assets/icons/file-explorer.svg?react'),
+  github: () => import('~/assets/icons/github.svg?react'),
+  info: () => import('~/assets/icons/info.svg?react'),
+  laptop: () => import('~/assets/icons/laptop.svg?react'),
+  link: () => import('~/assets/icons/link.svg?react'),
+  lock: () => import('~/assets/icons/lock.svg?react'),
+  logo: () => import('~/assets/icons/logo.svg?react'),
+  lowResHeart: () => import('~/assets/icons/low-res-heart.svg?react'),
+  mobile: () => import('~/assets/icons/mobile.svg?react'),
+  moon: () => import('~/assets/icons/moon.svg?react'),
+  play: () => import('~/assets/icons/play.svg?react'),
+  question: () => import('~/assets/icons/question.svg?react'),
+  redo: () => import('~/assets/icons/redo.svg?react'),
+  save: () => import('~/assets/icons/save.svg?react'),
+  setting: () => import('~/assets/icons/setting.svg?react'),
+  star: () => import('~/assets/icons/star.svg?react'),
+  sun: () => import('~/assets/icons/sun.svg?react'),
+  tick: () => import('~/assets/icons/tick.svg?react'),
+  trash: () => import('~/assets/icons/trash.svg?react'),
+  videoFile: () => import('~/assets/icons/video-file.svg?react'),
+  warning: () => import('~/assets/icons/warning.svg?react'),
+} as const
 
 export default registry

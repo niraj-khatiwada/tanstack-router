@@ -1,6 +1,6 @@
 import React from 'react'
 import { Toaster as NativeToaster, toast } from 'sonner'
-import { useTheme } from '~/hooks/useTheme'
+import { useTheme } from 'src/hooks/useTheme'
 
 export function Toaster() {
   const { theme } = useTheme()

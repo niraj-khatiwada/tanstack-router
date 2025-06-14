@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { auth } from '~/libs/auth'
-import { queryClient } from '~/providers/QueryClientProvider'
+import { auth } from 'src/libs/auth'
+import { queryClient } from 'src/providers/QueryClientProvider'
 
 export const CURRENT_SESSION_QUERY_KEY = 'current-user-session'
 

@@ -2,7 +2,7 @@
 
 import React, { ComponentProps } from 'react'
 
-import { cn } from '~/utils/tailwind'
+import { cn } from 'src/utils/tailwind'
 import Image from '../Image'
 import Footer from './Footer'
 import Header from './Header'

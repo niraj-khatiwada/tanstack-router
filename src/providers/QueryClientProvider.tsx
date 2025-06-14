@@ -1,5 +1,3 @@
-'use client'
-
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import {
   QueryClient,
@@ -10,8 +8,10 @@ import {
   removeOldestQuery,
 } from '@tanstack/react-query-persist-client'
 
-import { client } from '~/api/gen/client.gen'
-import { env } from '~/utils/env'
+import { client } from 'src/api/gen/client.gen'
+import { env } from 'src/utils/env'
+
+export const PERSISTER_KEY = 'UkVBQ1RfUVVFUll'
 
 client.setConfig({
   baseUrl: env.VITE_API_URL,
@@ -32,22 +32,22 @@ export const queryClient = new QueryClient({
   },
 })
 
-const PERSISTER_KEY = 'UkVBQ1RfUVVFUll'
+if (typeof window !== 'undefined') {
+  const localStoragePersister = createSyncStoragePersister({
+    storage: window.localStorage,
+    retry: removeOldestQuery,
+    key: PERSISTER_KEY,
+  })
 
-const localStoragePersister = createSyncStoragePersister({
-  storage: window.localStorage,
-  retry: removeOldestQuery,
-  key: PERSISTER_KEY,
-})
-
-persistQueryClient({
-  // @ts-ignore: No idea what this error mean
-  queryClient,
-  persister: localStoragePersister,
-  dehydrateOptions: {
-    shouldDehydrateQuery: (query) => query?.meta?.persist === true,
-  },
-})
+  persistQueryClient({
+    // @ts-ignore: No idea what this error mean
+    queryClient,
+    persister: localStoragePersister,
+    dehydrateOptions: {
+      shouldDehydrateQuery: (query) => query?.meta?.persist === true,
+    },
+  })
+}
 
 export function QueryClientProvider({
   children,

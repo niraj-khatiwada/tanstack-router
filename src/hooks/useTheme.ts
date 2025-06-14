@@ -1,64 +1,31 @@
-import { useEffect } from 'react'
-import { create } from 'zustand'
-import { subscribeWithSelector } from 'zustand/middleware'
-import * as constants from '~/constants'
-
-export type ThemeVariant = 'light' | 'dark'
-
-export type ThemeStore = {
-  theme: ThemeVariant
-  setTheme: (newTheme: ThemeVariant) => void
-  toggleTheme: () => void
-}
-
-let persistedTheme: ThemeVariant | null = localStorage.getItem(
-  constants.theme,
-) as ThemeVariant
-
-if (persistedTheme && !['dark', 'light'].includes(persistedTheme)) {
-  localStorage.removeItem(constants.theme)
-  persistedTheme = null
-}
-
-const useThemeStore = create<ThemeStore>()(
-  subscribeWithSelector((set) => ({
-    theme: persistedTheme ?? 'dark',
-    setTheme(newTheme) {
-      set((store) => ({ ...store, theme: newTheme }))
-    },
-    toggleTheme() {
-      set((store) => ({
-        ...store,
-        theme: store.theme === 'dark' ? 'light' : 'dark',
-      }))
-    },
-  })),
-)
+import { useLoaderData, useRouter } from '@tanstack/react-router'
+import { useState } from 'react'
+import { setThemeServerFn, toggleThemeServerFn } from '~/server/functions/theme'
+import { ThemeVariant } from '~/types/theme'
+import { getCookie } from '~/utils/cookie'
 
 export function useTheme() {
-  const themeStore = useThemeStore()
+  const router = useRouter()
 
-  const { theme } = themeStore
+  const themeFromServer = useLoaderData({ from: '__root__' })
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [theme])
+  const [theme, setTheme] = useState(() =>
+    typeof window === 'undefined'
+      ? themeFromServer
+      : (getCookie('theme') as ThemeVariant),
+  )
 
-  useEffect(() => {
-    const unsubscribe = useThemeStore.subscribe(
-      (store) => store.theme,
-      (newTheme) => {
-        localStorage.setItem(constants.theme, newTheme)
-      },
-    )
-    return () => {
-      unsubscribe()
-    }
-  }, [])
+  const _setTheme = (variant: ThemeVariant) => {
+    setTheme(variant)
+    setThemeServerFn({ data: variant }).then(() => router.invalidate())
+  }
 
-  return themeStore
+  const toggleTheme = () => {
+    toggleThemeServerFn().then((value) => {
+      setTheme(value)
+      router.invalidate()
+    })
+  }
+
+  return { theme, setTheme: _setTheme, toggleTheme }
 }

@@ -1,16 +1,16 @@
 import { UseDisclosureProps } from '@heroui/react'
 import React from 'react'
 
-import Button, { ButtonProps } from '~/components/Button'
-import Divider from '~/components/Divider'
-import Icon from '~/components/Icon'
+import Button, { ButtonProps } from 'src/components/Button'
+import Divider from 'src/components/Divider'
+import Icon from 'src/components/Icon'
 import Modal, {
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalProps,
-} from '~/components/Modal'
+} from 'src/components/Modal'
 
 type renderFooterArgs = { closeModal: UseDisclosureProps['onClose'] }
 

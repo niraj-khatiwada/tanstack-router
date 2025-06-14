@@ -1,17 +1,20 @@
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
-import react from '@vitejs/plugin-react'
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import eslint from 'vite-plugin-eslint'
 import svgr from 'vite-plugin-svgr'
+import tsConfigPaths from 'vite-tsconfig-paths'
 import packageJSON from './package.json'
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
+  server: {
+    port: 3000,
+  },
   plugins: [
-    TanStackRouterVite({
-      routeFileIgnorePattern: '(^[A-Z].*)',
+    tsConfigPaths({
+      projects: ['./tsconfig.json'],
     }),
-    react(),
+    tanstackStart(),
     svgr(),
     eslint({
       failOnError: false,
@@ -26,9 +29,7 @@ export default defineConfig(({ mode }) => ({
       '~': resolve('./src'),
     },
   },
-  // See `src/main.tsx` file to assign these defined values to window.
   define: {
     __appVersion: JSON.stringify(packageJSON.version),
-    __envMode: JSON.stringify(mode),
   },
-}))
+})

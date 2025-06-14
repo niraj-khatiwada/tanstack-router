@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
-import Button from '~/components/Button'
-import Icon from '~/components/Icon'
-import { getCurrentSession } from '~/hooks/useCurrentSession'
-import { auth } from '~/libs/auth'
+import Button from 'src/components/Button'
+import Icon from 'src/components/Icon'
+import { getCurrentSession } from 'src/hooks/useCurrentSession'
+import { auth } from 'src/libs/auth'
 
 function SignInPassKey() {
   const [isSignInPending, setIsSignInPending] = useState(false)

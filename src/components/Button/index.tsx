@@ -5,7 +5,7 @@ import {
 import { ClassValue } from 'clsx'
 import React from 'react'
 
-import { cn } from '~/utils/tailwind'
+import { cn } from 'src/utils/tailwind'
 
 export interface ButtonProps
   extends Omit<NextButtonProps, 'className' | 'onClick'> {

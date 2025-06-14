@@ -3,7 +3,6 @@ import {
   Link as NativeLink,
   type LinkProps as LProps,
 } from '@tanstack/react-router'
-import React from 'react'
 
 interface LinkProps extends LProps {
   href?: LProps['to']

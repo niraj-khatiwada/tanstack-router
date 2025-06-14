@@ -1,9 +1,10 @@
 import React from 'react'
 
-import Button from '~/components/Button'
-import Icon from '~/components/Icon'
-import Tooltip from '~/components/Tooltip'
-import { ThemeStore, useTheme } from '~/hooks/useTheme'
+import Button from 'src/components/Button'
+import Icon from 'src/components/Icon'
+import Tooltip from 'src/components/Tooltip'
+import { useTheme } from '~/hooks/useTheme'
+import { ThemeStore } from '~/types/theme'
 
 type ThemeSwitcherChildrenProps = ThemeStore
 
@@ -17,13 +18,7 @@ function ThemeSwitcher(props: ThemeSwitcherProps) {
   const { theme, setTheme, toggleTheme } = useTheme()
 
   return children == null ? (
-    <Button
-      isIconOnly
-      size="sm"
-      onPress={() => {
-        toggleTheme()
-      }}
-    >
+    <Button isIconOnly size="sm" onPress={toggleTheme}>
       <Tooltip
         content="Toggle theme"
         aria-label="Toggle theme"
