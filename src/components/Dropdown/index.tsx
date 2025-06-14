@@ -9,8 +9,8 @@ import {
   type DropdownTriggerProps as NextUIDropdownTriggerProps,
 } from '@heroui/react'
 import React from 'react'
-import { blurCSS } from 'src/ui/backdrop-blur'
 import { cn } from 'src/utils/tailwind'
+import { blurCSS } from '~/ui/blur/BackdropdBlur'
 
 interface DropdownProps extends NextUIDropdownProps {}
 function Dropdown(props: DropdownProps) {

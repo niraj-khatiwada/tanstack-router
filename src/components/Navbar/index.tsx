@@ -6,16 +6,16 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@heroui/react'
-import useCurrentSession from 'src/hooks/useCurrentSession'
-import ThemeSwitcher from 'src/ui/theme-switcher'
+import { useLoaderData } from '@tanstack/react-router'
+import ThemeSwitcher from '~/ui/theme/ThemeSwitcher'
 import Avatar from '../Avatar'
 import Button from '../Button'
 import Dropdown, { DropdownTrigger } from '../Dropdown'
 import Link from '../Link'
 
 function Navbar() {
-  const { data: currentSession } = useCurrentSession()
-  const user = currentSession?.user
+  const { userSession } = useLoaderData({ from: '__root__' })
+  const user = userSession?.user
 
   return (
     <HeroNavbar maxWidth="xl">

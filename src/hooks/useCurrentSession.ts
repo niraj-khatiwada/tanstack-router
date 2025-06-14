@@ -4,14 +4,14 @@ import { queryClient } from 'src/providers/QueryClientProvider'
 
 export const CURRENT_SESSION_QUERY_KEY = 'current-user-session'
 
-async function queryFn() {
+async function getUserSessionFn() {
   const { data, error } = await auth.getSession()
   if (error) {
     return Promise.reject(error)
   }
   let filteredData = data
   /**
-   * Obfuscate sensitive fields like `email`, `ipAddress` in persistent storage.
+   * Obfuscate sensitive fields like `email`, `ipAddress` in persistent storage in the client.
    * Use `whoami` api to get such information
    */
   if (data?.user) {
@@ -38,7 +38,7 @@ async function queryFn() {
 function useCurrentSession() {
   const response = useQuery({
     queryKey: [CURRENT_SESSION_QUERY_KEY],
-    queryFn,
+    queryFn: getUserSessionFn,
     refetchOnMount: true,
     meta: {
       persist: true,
@@ -56,8 +56,7 @@ export async function getCurrentSession(options?: {
   if (['cache-only', 'cache-first'].includes(networkMode)) {
     const cachedData = queryClient.getQueryData([
       CURRENT_SESSION_QUERY_KEY,
-    ]) as ReturnType<typeof queryFn>
-
+    ]) as ReturnType<typeof getUserSessionFn>
     if (networkMode === 'cache-only') {
       return cachedData
     }
@@ -68,7 +67,7 @@ export async function getCurrentSession(options?: {
 
   return queryClient.fetchQuery({
     queryKey: [CURRENT_SESSION_QUERY_KEY],
-    queryFn,
+    queryFn: getUserSessionFn,
     retry: false,
     meta: {
       persist: true,

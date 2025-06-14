@@ -7,7 +7,7 @@ import { getCookie } from '~/utils/cookie'
 export function useTheme() {
   const router = useRouter()
 
-  const themeFromServer = useLoaderData({ from: '__root__' })
+  const { theme: themeFromServer } = useLoaderData({ from: '__root__' })
 
   const [theme, setTheme] = useState(() =>
     typeof window === 'undefined'

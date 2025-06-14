@@ -6,7 +6,7 @@ import {
 interface SpinnerPros extends NextUISpinnerProps {}
 
 function Spinner(props: SpinnerPros) {
-  return <NextUISpinner {...props} />
+  return <NextUISpinner size="sm" {...props} />
 }
 
 export default Spinner

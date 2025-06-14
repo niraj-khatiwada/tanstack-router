@@ -11,13 +11,27 @@ import Navbar from '~/components/Navbar'
 import { Toaster } from '~/components/Toast'
 import css from '~/global.css?url'
 import { QueryClientProvider } from '~/providers/QueryClientProvider'
+import { getUserSessionServerFn } from '~/server/functions/auth'
 import { getThemeServerFn } from '~/server/functions/theme'
+import { UserSession } from '~/types/auth'
+import { ThemeVariant } from '~/types/theme'
 import Verify2FaCode from '~/ui/auth/2fa/2faVerificationModal'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
 }>()({
-  loader: () => getThemeServerFn(),
+  async loader() {
+    const [theme, userSession] = await Promise.all(
+      [getThemeServerFn, getUserSessionServerFn].map((fn) => fn()),
+    )
+    return {
+      theme,
+      userSession,
+    } as {
+      theme: ThemeVariant
+      userSession?: UserSession
+    }
+  },
   head: () => ({
     meta: [
       {
@@ -60,7 +74,8 @@ const TanStackRouterDevtools =
       )
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  const theme = Route.useLoaderData()
+  const { theme } = Route.useLoaderData()
+
   return (
     <html lang="en" className={theme}>
       <head>

@@ -11,8 +11,8 @@ import {
   type ModalProps as NextUIModalProps,
 } from '@heroui/react'
 import React from 'react'
-import { BackdropBlurContent } from 'src/ui/backdrop-blur'
 import { cn } from 'src/utils/tailwind'
+import { BackdropBlurContent } from '~/ui/blur/BackdropdBlur'
 import { bottomToTop, zoomIn } from './modal.animation'
 
 export interface ModalProps extends NextUIModalProps {

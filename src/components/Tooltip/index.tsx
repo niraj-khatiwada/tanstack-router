@@ -3,8 +3,8 @@ import {
   type TooltipProps as NextUITooltipProps,
 } from '@heroui/react'
 import React from 'react'
-import { blurCSS, getBlurPseudoCSS } from 'src/ui/backdrop-blur'
 import { cn } from 'src/utils/tailwind'
+import { blurCSS, getBlurPseudoCSS } from '~/ui/blur/BackdropdBlur'
 
 const blurCSSBefore = getBlurPseudoCSS('before')
 
