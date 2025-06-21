@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { toast } from 'sonner'
 
+import { useDisclosure } from '@heroui/react'
 import Button from '~/components/Button'
+import Snippet from '~/components/Snippet'
 import useCurrentSession from '~/hooks/useCurrentSession'
 import { auth } from '~/libs/auth'
+import AlertDialog from '~/ui/dialogs/AlertDialog'
 import OTPQrCode from './OTPQrCode'
 import VerifyPassword from './VerifyPassword'
 
@@ -11,12 +14,15 @@ function TwoFactorAuth() {
   const { data: currentSession, refetch: refetchSession } = useCurrentSession()
   const isEnabled = currentSession?.user?.twoFactorEnabled
 
+  const showBackupCodeDiscloser = useDisclosure()
+
   const [mode, setMode] = useState<'enable' | 'disable' | 'new-qr-code' | null>(
     null,
   )
   const [twoFactorVerifyURI, setTwoFactorVerifyURI] = useState<string | null>(
     null,
   )
+  const [backupCodes, setBackupCodes] = useState<string[]>([])
 
   const handleVerifyPassword = async ({ password }: { password: string }) => {
     try {
@@ -29,6 +35,7 @@ function TwoFactorAuth() {
           return
         }
         setTwoFactorVerifyURI(data.totpURI)
+        setBackupCodes(data.backupCodes)
       } else if (mode === 'new-qr-code') {
         const { data, error } = await auth.twoFactor.getTotpUri({
           password,
@@ -64,8 +71,11 @@ function TwoFactorAuth() {
         toast.error(error?.message ?? '')
         return
       }
+      if (backupCodes.length > 0) {
+        showBackupCodeDiscloser.onOpen()
+      }
       setMode(null)
-      toast.success('Two factor authentication enabled successfully')
+      toast.success('Two factor authentication enabled successfully.')
       await refetchSession?.()
     } catch (error: any) {
       toast.error(error?.message ?? '')
@@ -138,6 +148,35 @@ function TwoFactorAuth() {
           )
         ) : null}
       </div>
+      <AlertDialog
+        alertType="info"
+        title="Save your backup codes"
+        description={
+          <div className="px-4">
+            <p className="text-center text-sm">
+              You can use each of these backup codes once to recover your
+              account.
+            </p>
+            <Snippet className="w-full my-2" symbol={false}>
+              {backupCodes.map((c) => (
+                <p key={c}>{c}</p>
+              ))}
+            </Snippet>
+          </div>
+        }
+        discloser={showBackupCodeDiscloser}
+        renderFooter={({ closeModal }) => (
+          <Button
+            onPress={() => {
+              closeModal?.()
+            }}
+            className="p-0 m-0 w-full"
+          >
+            OK
+          </Button>
+        )}
+        modalProps={{ backdrop: 'blur' }}
+      />
     </div>
   )
 }

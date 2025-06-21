@@ -29,6 +29,7 @@ const profileSchema = z.object({
     })
     .nullable()
     .optional(),
+  removeImage: z.boolean().optional(),
 })
 
 type ProfileSchema = z.infer<typeof profileSchema>
@@ -72,8 +73,9 @@ function Profile() {
             username: value.username,
             firstName: value.firstName,
             lastName: value.lastName,
-            image:
-              value.imageFile && fileResponse
+            image: value.removeImage
+              ? null
+              : value.imageFile && fileResponse
                 ? fileResponse.filename
                 : undefined,
           },
@@ -85,6 +87,7 @@ function Profile() {
           queryKey: [CURRENT_SESSION_QUERY_KEY],
         })
         toast.success('Profile updated successfully.')
+        form.resetField('removeImage')
       } catch (error: any) {
         toast.error(error?.message ?? '')
       }
@@ -126,6 +129,7 @@ function Profile() {
                       handleChange(file)
                       if (file === null) {
                         form.setFieldValue('image', '')
+                        form.setFieldValue('removeImage', true)
                       }
                     }}
                   />

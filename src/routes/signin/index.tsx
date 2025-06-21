@@ -26,14 +26,16 @@ const signInSchema = z.object({
 
 type SignInSchema = z.infer<typeof signInSchema>
 
-const locationHash = {
+const SIGNIN_TYPES = {
   email: 'email',
   magicLink: 'magicLink',
-}
+} as const
 
 function SignIn() {
   const navigate = useNavigate()
-  const { hash, search } = useLocation()
+  const { search } = useLocation()
+
+  const signInType = search?.signInType as string
 
   const form = useForm({
     defaultValues: { emailOrUsername: '', password: '' } as SignInSchema,
@@ -74,10 +76,10 @@ function SignIn() {
   })
 
   useEffect(() => {
-    if (!(hash in locationHash)) {
+    if (!(signInType in SIGNIN_TYPES)) {
       navigate({ to: '.', hash: '', search })
     }
-  }, [hash, navigate, search])
+  }, [navigate, search, signInType])
 
   useEffect(() => {
     const unregister = use2faStore.getState().onVerificationComplete(() => {
@@ -92,7 +94,7 @@ function SignIn() {
     <div className="mt-[20%]">
       <div className="max-w-[25rem] m-auto">
         <h1 className="text-xl font-bold text-center mb-4">Sign In</h1>
-        {hash === locationHash.email ? (
+        {signInType === SIGNIN_TYPES.email ? (
           <>
             <form
               onSubmit={(evt) => {
@@ -156,14 +158,20 @@ function SignIn() {
           </>
         ) : null}
         <div className="space-y-2">
-          {!hash ? (
+          {!signInType ? (
             <>
               <Button
                 variant="solid"
                 color="primary"
                 className="w-full"
                 onPress={() => {
-                  navigate({ to: '.', search, hash: locationHash.email })
+                  navigate({
+                    to: '.',
+                    search: {
+                      ...(search ?? {}),
+                      signInType: SIGNIN_TYPES.email,
+                    },
+                  })
                 }}
               >
                 SignIn with Email
@@ -172,19 +180,21 @@ function SignIn() {
               <SignInPassKey />
             </>
           ) : null}
-          {!hash || hash === locationHash.magicLink ? (
+          {!signInType || signInType === SIGNIN_TYPES.magicLink ? (
             <SignInMagicLink
-              isFormVisible={hash === locationHash.magicLink}
+              isFormVisible={signInType === SIGNIN_TYPES.magicLink}
               onFormRequest={() => {
                 navigate({
                   to: '/signin',
-                  search,
-                  hash: locationHash.magicLink,
+                  search: {
+                    ...(search ?? {}),
+                    signInType: SIGNIN_TYPES.magicLink,
+                  },
                 })
               }}
             />
           ) : null}
-          {!hash ? (
+          {!signInType ? (
             <Link
               href="/signup"
               className="text-sm mx-auto w-fit text-center block"
@@ -196,7 +206,7 @@ function SignIn() {
               variant="light"
               className="text-sm mx-auto w-fit text-center block text-black dark:text-white mt-4"
               onPress={() => {
-                navigate({ to: '.', search })
+                navigate({ to: '/signin' })
               }}
             >
               {'< Back to SignIn'}

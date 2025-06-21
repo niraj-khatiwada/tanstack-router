@@ -42,6 +42,7 @@ function Navbar() {
                 <DropdownItem key="account-settings" className="p-0 m-1">
                   <Link
                     to="/account/settings"
+                    hash="profile"
                     className="text-unset text-sm w-full h-full"
                   >
                     Account Settings
