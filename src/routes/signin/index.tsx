@@ -35,7 +35,11 @@ function SignIn() {
   const navigate = useNavigate()
   const { search } = useLocation()
 
-  const signInType = search?.signInType as string
+  const signInType = (search?.signInType as string)?.length
+    ? (search?.signInType as string) in SIGNIN_TYPES
+      ? search?.signInType
+      : SIGNIN_TYPES.email
+    : search?.signInType
 
   const form = useForm({
     defaultValues: { emailOrUsername: '', password: '' } as SignInSchema,
@@ -74,12 +78,6 @@ function SignIn() {
       }
     },
   })
-
-  useEffect(() => {
-    if (!(signInType in SIGNIN_TYPES)) {
-      navigate({ to: '.', hash: '', search })
-    }
-  }, [navigate, search, signInType])
 
   useEffect(() => {
     const unregister = use2faStore.getState().onVerificationComplete(() => {

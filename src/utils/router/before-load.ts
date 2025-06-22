@@ -13,7 +13,7 @@ export async function protectRouteBeforeLoad(
     const currentSession = await (typeof window === 'undefined'
       ? getUserSessionServerFn()
       : getCurrentSession({
-          networkMode: 'cache-only',
+          networkMode: 'cache-first',
         }))
     if (currentSession == null) {
       throw new Error()
@@ -39,7 +39,7 @@ export async function preventRouteBeforeLoad(
     currentSession = await (typeof window === 'undefined'
       ? getUserSessionServerFn()
       : getCurrentSession({
-          networkMode: 'cache-only',
+          networkMode: 'cache-first',
         }))
   } catch {
     //

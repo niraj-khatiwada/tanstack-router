@@ -1,4 +1,4 @@
-import { useNavigate } from '@tanstack/react-router'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import Spinner from '~/components/Spinner'
 import { auth } from '~/libs/auth'
@@ -21,6 +21,9 @@ async function clearAllStorage() {
 
 function Logout() {
   const navigate = useNavigate()
+  const { search } = useLocation()
+
+  const redirectTo = search?.redirectTo as string
 
   const handleLogout = async () => {
     try {
@@ -29,7 +32,7 @@ function Logout() {
     } catch {
       //
     }
-    navigate({ to: '/', replace: true, reloadDocument: true })
+    navigate({ to: redirectTo ?? '/', replace: true, reloadDocument: true })
   }
 
   useEffect(() => {

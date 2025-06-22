@@ -1,11 +1,13 @@
+import { useDisclosure } from '@heroui/react'
 import { useForm } from '@tanstack/react-form'
-import React from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import Button from '~/components/Button'
 import Checkbox from '~/components/Checkbox'
 import TextInput from '~/components/Input/TextInput'
 import { auth } from '~/libs/auth'
+import AlertDialog from '~/ui/dialogs/AlertDialog'
 
 const changePasswordSchema = z
   .object({
@@ -22,6 +24,9 @@ const changePasswordSchema = z
 type ChangePasswordSchema = z.infer<typeof changePasswordSchema>
 
 function ChangePassword() {
+  const navigate = useNavigate()
+  const cannotChangePasswordDiscloser = useDisclosure()
+
   const form = useForm({
     defaultValues: {
       currentPassword: '',
@@ -43,6 +48,10 @@ function ChangePassword() {
           revokeOtherSessions: value.revokeOtherSessions,
         })
         if (error) {
+          if (error?.code === 'CREDENTIAL_ACCOUNT_NOT_FOUND') {
+            cannotChangePasswordDiscloser.onOpen()
+            return
+          }
           toast.error(error?.message ?? '')
           return
         }
@@ -132,6 +141,55 @@ function ChangePassword() {
           )}
         </form.Subscribe>
       </form>
+      <AlertDialog
+        alertType="error"
+        title="Cannot Change Password"
+        description={
+          <div className="px-4">
+            <p className="text-center opacity-80 text-sm">
+              Looks like your account was created via OAuth(eg: Google, Apple,
+              etc.) which does not have a password yet.
+              <span className="block mt-2">
+                For security reasons, such accounts can only set a new password
+                by going through <strong>Forgot Password</strong> flow.
+              </span>
+              <span className="block mt-2">
+                If you want to set a new password, please press{' '}
+                <strong>Logout & Proceed</strong> which will log you out from
+                this session and takes you to next step.
+              </span>
+            </p>
+          </div>
+        }
+        discloser={cannotChangePasswordDiscloser}
+        renderFooter={({ closeModal }) => (
+          <div className="w-full space-y-2">
+            <Button
+              onPress={() => {
+                closeModal?.()
+                navigate({
+                  to: '/logout',
+                  search: { redirectTo: '/forgot-password' },
+                })
+              }}
+              className="p-0 m-0 w-full"
+              fullWidth
+              color="danger"
+            >
+              Logout & Proceed
+            </Button>
+            <Button
+              onPress={() => {
+                closeModal?.()
+              }}
+              className="p-0 m-0 w-full"
+            >
+              Cancel
+            </Button>
+          </div>
+        )}
+        modalProps={{ backdrop: 'blur' }}
+      />
     </div>
   )
 }

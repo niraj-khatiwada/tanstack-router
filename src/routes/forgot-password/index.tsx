@@ -7,10 +7,11 @@ import Button from '~/components/Button'
 import TextInput from '~/components/Input/TextInput'
 import { auth } from '~/libs/auth'
 import AlertDialog from '~/ui/dialogs/AlertDialog'
+import { preventRouteBeforeLoad } from '~/utils/router/before-load'
 
 export const Route = createFileRoute({
   component: ForgotPassword,
-  // beforeLoad: preventRouteBeforeLoad,
+  beforeLoad: preventRouteBeforeLoad,
 })
 
 const forgotPasswordSchema = z.object({

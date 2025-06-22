@@ -46,6 +46,7 @@ function AlertDialog({
     <Modal
       isOpen={discloser?.isOpen}
       onClose={discloser?.onClose}
+      backdrop="blur"
       {...modalProps}
     >
       <ModalContent className="max-w-[20rem] pb-2 overflow-hidden rounded-2xl">
